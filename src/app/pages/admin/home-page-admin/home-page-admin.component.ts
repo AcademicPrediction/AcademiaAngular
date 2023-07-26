@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { SupervisorService } from 'src/app/service/admin/supervisor.service';
 import { Supervisor } from 'src/app/model/supervisor';
+
+// Agregamos la propiedad isSelected a la interfaz Supervisor
+interface SupervisorWithSelection extends Supervisor {
+  isSelected: boolean;
+}
 
 @Component({
   selector: 'app-home-page-admin',
@@ -8,12 +13,13 @@ import { Supervisor } from 'src/app/model/supervisor';
   styleUrls: ['./home-page-admin.component.css']
 })
 export class HomePageAdminComponent implements OnInit {
-  supervisores: Supervisor[] = [];
+  supervisores: SupervisorWithSelection[] = [];
   totalSupervisores: number = 0;
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 10;
   totalPages: number = 1;
-  selectedSupervisor: Supervisor | null = null;
+  selectedSupervisor: SupervisorWithSelection | null = null;
+  isIconsEnabled: boolean = false;
   newSupervisor: Supervisor = {
     id: 0,
     nombre: '',
@@ -24,23 +30,25 @@ export class HomePageAdminComponent implements OnInit {
     numeroTelefonico: ''
   };
 
-  constructor(private dataService: SupervisorService) { }
+  constructor(private supervisorService: SupervisorService) { }
 
   ngOnInit(): void {
     this.consultarTodosSupervisores();
   }
 
   consultarTodosSupervisores(): void {
-    this.dataService.getAll().subscribe((supervisores: Supervisor[] | null) => {
-      if (supervisores && Array.isArray(supervisores)) {
-        this.supervisores = supervisores;
-        this.totalSupervisores = supervisores.length;
+    this.supervisorService.getAll().subscribe(
+      (supervisores: Supervisor[]) => {
+        // Inicializar la propiedad isSelected en false para cada supervisor
+        this.supervisores = supervisores.map((supervisor) => ({ ...supervisor, isSelected: false }));
+        this.totalSupervisores = this.supervisores.length;
         this.calculateTotalPages();
         this.setPage(1);
-      } else {
-        // Manejo de error o mensaje adecuado si no se obtienen los datos esperados
+      },
+      (error) => {
+        console.error('Error al obtener supervisores:', error);
       }
-    });
+    );
   }
 
   calculateTotalPages(): void {
@@ -77,57 +85,111 @@ export class HomePageAdminComponent implements OnInit {
     }
   }
 
-  getPaginatedSupervisores(): Supervisor[] {
+  getPaginatedSupervisores(): SupervisorWithSelection[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalSupervisores);
     return this.supervisores.slice(startIndex, endIndex);
   }
 
-  editSupervisor(supervisor: Supervisor): void {
+  editSupervisor(supervisor: SupervisorWithSelection): void {
     // Asegurarnos de que supervisor no sea nulo antes de asignarlo a selectedSupervisor
     this.selectedSupervisor = supervisor ? { ...supervisor } : null;
   }
 
   saveEditedSupervisor(): void {
     if (this.selectedSupervisor) {
-      // Lógica para guardar los cambios en el supervisor editado
-      // this.dataService.editSupervisor(this.selectedSupervisor);
-      console.log('Guardar supervisor editado:', this.selectedSupervisor);
-      this.selectedSupervisor = null;
+      this.supervisorService.update(this.selectedSupervisor).subscribe(() => {
+        console.log('Guardar supervisor editado:', this.selectedSupervisor);
+        this.selectedSupervisor = null;
+      });
     }
   }
 
   addSupervisor(): void {
     // Lógica para agregar un nuevo supervisor
-    // this.dataService.addSupervisor(this.newSupervisor);
-    console.log('Agregar supervisor:', this.newSupervisor);
-    this.newSupervisor = {
-      id: 0,
-      nombre: '',
-      apellido: '',
-      correoElectronico: '',
-      contrasena: '',
-      dni: '',
-      numeroTelefonico: ''
-    }; // Limpiar el formulario después de agregar
+    this.supervisorService.create(this.newSupervisor).subscribe(() => {
+      console.log('Agregar supervisor:', this.newSupervisor);
+      this.newSupervisor = {
+        id: 0,
+        nombre: '',
+        apellido: '',
+        correoElectronico: '',
+        contrasena: '',
+        dni: '',
+        numeroTelefonico: ''
+      }; // Limpiar el formulario después de agregar
+    });
   }
 
   deleteSupervisor(id: number): void {
     // Lógica para eliminar un supervisor por su ID
-    console.log('Eliminar supervisor con ID:', id);
+    this.supervisorService.delete(id).subscribe(
+      () => {
+        console.log('Eliminar supervisor con ID:', id);
+        this.consultarTodosSupervisores();
+      },
+      (error: any) => {
+        console.error('Error al eliminar supervisor:', error);
+      }
+    );
   }
 
-  selectCheckbox(event: any): void {
-    // Lógica para seleccionar/deseleccionar una fila mediante el checkbox
-    console.log('Checkbox cambiado:', event.target.value, event.target.checked);
+  selectCheckbox(event: any, supervisor: SupervisorWithSelection): void {
+    supervisor.isSelected = event.target.checked;
+    this.updateRowSelection(supervisor);
+    this.updateIconState();
   }
 
   selectAllCheckbox(event: any): void {
-    // Lógica para seleccionar/deseleccionar todas las filas mediante el checkbox de selección general
-    console.log('Checkbox Seleccionar Todo cambiado:', event.target.checked);
+    const checked = event.target.checked;
+    this.supervisores.forEach((supervisor) => {
+      supervisor.isSelected = checked;
+      this.updateRowSelection(supervisor);
+    });
+
+    this.updateIconState();
+  }
+
+  updateRowSelection(supervisor: SupervisorWithSelection): void {
+    const checkboxRow = this.getCheckboxRow(supervisor.id);
+    if (checkboxRow) {
+      if (supervisor.isSelected) {
+        checkboxRow.classList.add('selected');
+      } else {
+        checkboxRow.classList.remove('selected');
+      }
+    }
+  }
+
+  getCheckboxRow(supervisorId: number): HTMLElement | null {
+    const checkboxElement: ElementRef | null = this.getCheckboxElement(supervisorId);
+    if (checkboxElement && checkboxElement.nativeElement) {
+      return checkboxElement.nativeElement.closest('tr');
+    }
+    return null;
+  }
+
+  getCheckboxElement(supervisorId: number): ElementRef | null {
+    return new ElementRef(document.getElementById('checkbox' + supervisorId));
+  }
+  
+  updateIconState(): void {
+    // Verificar si al menos una fila está seleccionada para habilitar los íconos
+    this.isIconsEnabled = this.supervisores.some((supervisor) => supervisor.isSelected);
   }
 
   deleteSelectedSupervisors(): void {
-    // Lógica para eliminar los supervisores seleccionados
-  }  
+    // Lógica para eliminar supervisores seleccionados
+    const selectedSupervisors = this.supervisores.filter((supervisor) => supervisor.isSelected);
+    selectedSupervisors.forEach((supervisor) => {
+      this.supervisorService.delete(supervisor.id).subscribe(
+        () => {
+          this.supervisores = this.supervisores.filter(s => s.id !== supervisor.id);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+  }
 }

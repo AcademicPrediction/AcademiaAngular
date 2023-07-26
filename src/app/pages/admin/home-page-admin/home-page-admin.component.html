@@ -16,14 +16,10 @@
                   <i class="material-icons">&#xE147;</i>
                   <span>Agregar Nuevo Supervisor</span>
                 </button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteSupervisorModal">
-                  <i class="material-icons">&#xE15C;</i>
-                  <span>Eliminar</span>
-                </button>
               </div>
             </div>
           </div>
-          <table class="table table-striped table-hover">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th>
@@ -43,7 +39,7 @@
               <tr *ngFor="let supervisor of getPaginatedSupervisores()">
                 <td>
                   <span class="custom-checkbox">
-                    <input type="checkbox" [id]="'checkbox' + supervisor.id" name="options[]" [value]="supervisor.id" (change)="selectCheckbox($event)">
+                    <input type="checkbox" [id]="'checkbox' + supervisor.id" name="options[]" [value]="supervisor.id" (change)="selectCheckbox($event, supervisor)">
                     <label [for]="'checkbox' + supervisor.id"></label>
                   </span>
                 </td>
@@ -54,10 +50,15 @@
                 <td>{{ supervisor.dni }}</td> <!-- Muestra el DNI directamente -->
                 <td>{{ supervisor.numeroTelefonico }}</td> <!-- Muestra el número telefónico directamente -->
                 <td>
-                  <a href="#" class="edit" (click)="editSupervisor(supervisor)" data-toggle="modal" data-target="#editSupervisorModal">
+                  <!-- Agregar directiva ngIf para habilitar o deshabilitar los botones -->
+                  <a href="#" class="edit" (click)="editSupervisor(supervisor)" data-toggle="modal"
+                    [attr.data-target]="supervisor.isSelected ? '#editSupervisorModal' : null"
+                    [ngClass]="{ 'disabled': !supervisor.isSelected }">
                     <i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i>
                   </a>
-                  <a href="#" class="delete" (click)="deleteSupervisor(supervisor.id)" data-toggle="modal" data-target="#deleteSupervisorModal">
+                  <a href="#" class="delete" (click)="deleteSupervisor(supervisor.id)" data-toggle="modal"
+                    [attr.data-target]="supervisor.isSelected ? '#deleteSupervisorModal' : null"
+                    [ngClass]="{ 'disabled': !supervisor.isSelected }">
                     <i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i>
                   </a>
                 </td>
