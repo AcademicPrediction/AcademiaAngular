@@ -19,6 +19,15 @@
       "dni": "87654321",
       "numeroTelefonico": "555-5678",
       "isSelected": true
+    },
+    {
+      "id": 3,
+      "nombre": "Mark Albert",
+      "apellido": "Schmidt Avila",
+      "correoElectronico": "markalbert_09@hotmail.com",
+      "contrasena": "123",
+      "dni": "45877622",
+      "numeroTelefonico": "999999999"
     }
   ]
 }
