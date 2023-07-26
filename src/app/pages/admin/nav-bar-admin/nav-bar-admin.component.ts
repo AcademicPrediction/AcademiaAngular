@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-bar-admin.component.css']
 })
 export class NavBarAdminComponent {
+  sidebarActive = false;
 
+  toggleSidebar(): void {
+    this.sidebarActive = !this.sidebarActive;
+  }
 }
