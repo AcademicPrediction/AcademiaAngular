@@ -1,12 +1,12 @@
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar" class="tw-h-screen">
+    <nav id="sidebar" class="tw-h-screen tw-flex tw-flex-col tw-px-5  [&>ul>li>a>i]:tw-px-2">
 
         <!-- index.html o cualquier otro archivo HTML en la misma carpeta que la imagen -->
         <div class="sidebar-header">
             <img src="assets/ACADEMAI (1).png" alt="Logo">
         </div>
-        <ul class="list-unstyle flex-grow">
+        <ul class="list-unstyle tw-flex-grow [&>li>a]:tw-font-semibold [&>li]:tw-py-4">
             <li>
                 <a href="#">
                     <i class="fas fa-home"></i> <!-- Icono de una casa -->
@@ -21,7 +21,7 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fas fa-bell"></i> <!-- Icono de una campana -->
+                    <i class="fas fa-file-alt"></i> <!-- Icono de una campana -->
                     Historial
                 </a>
             </li>
@@ -32,14 +32,16 @@
                 </a>
             </li>
 
-            <li>
+            
+        </ul>
+
+        <ul>
+            <li class="tw-font-semibold tw-py-10 ">
                 <a href="#">
                     <i class="fas fa-sign-out-alt"></i> <!-- Icono de cerrar sesión -->
                     Cerrar sesión
                 </a>
             </li>
-            
-            
         </ul>
         
     </nav>
