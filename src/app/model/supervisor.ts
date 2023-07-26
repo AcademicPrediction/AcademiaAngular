@@ -6,4 +6,5 @@ export interface Supervisor {
     contrasena: string;
     dni: string;
     numeroTelefonico: string;
+    isSelected?: boolean;
 }

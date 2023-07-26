@@ -1,0 +1,24 @@
+{
+  "supervisor": [
+    {
+      "id": 1,
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "correoElectronico": "juan.perez@example.com",
+      "contrasena": "clave123",
+      "dni": "12345678",
+      "numeroTelefonico": "555-1234",
+      "isSelected": true
+    },
+    {
+      "id": 2,
+      "nombre": "María",
+      "apellido": "Avila",
+      "correoElectronico": "maria.lopez@example.com",
+      "contrasena": "clave456",
+      "dni": "87654321",
+      "numeroTelefonico": "555-5678",
+      "isSelected": true
+    }
+  ]
+}
