@@ -1,11 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupervisorService } from 'src/app/service/admin/supervisor.service';
 import { Supervisor } from 'src/app/model/supervisor';
-
-// Agregamos la propiedad isSelected a la interfaz Supervisor
-interface SupervisorWithSelection extends Supervisor {
-  isSelected: boolean;
-}
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home-page-admin',
@@ -13,13 +9,14 @@ interface SupervisorWithSelection extends Supervisor {
   styleUrls: ['./home-page-admin.component.css']
 })
 export class HomePageAdminComponent implements OnInit {
-  supervisores: SupervisorWithSelection[] = [];
+  supervisores: Supervisor[] = [];
   totalSupervisores: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
-  selectedSupervisor: SupervisorWithSelection | null = null;
+  selectedSupervisor: Supervisor | null = null;
   isIconsEnabled: boolean = false;
+  selectedSupervisorId: number | null = null;
   newSupervisor: Supervisor = {
     id: 0,
     nombre: '',
@@ -30,7 +27,7 @@ export class HomePageAdminComponent implements OnInit {
     numeroTelefonico: ''
   };
 
-  constructor(private supervisorService: SupervisorService) { }
+  constructor(private supervisorService: SupervisorService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.consultarTodosSupervisores();
@@ -39,8 +36,7 @@ export class HomePageAdminComponent implements OnInit {
   consultarTodosSupervisores(): void {
     this.supervisorService.getAll().subscribe(
       (supervisores: Supervisor[]) => {
-        // Inicializar la propiedad isSelected en false para cada supervisor
-        this.supervisores = supervisores.map((supervisor) => ({ ...supervisor, isSelected: false }));
+        this.supervisores = supervisores;
         this.totalSupervisores = this.supervisores.length;
         this.calculateTotalPages();
         this.setPage(1);
@@ -55,16 +51,18 @@ export class HomePageAdminComponent implements OnInit {
     this.totalPages = Math.ceil(this.totalSupervisores / this.itemsPerPage);
   }
 
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
+  setPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
     }
   }
 
+  previousPage(): void {
+    this.setPage(this.currentPage - 1);
+  }
+
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
+    this.setPage(this.currentPage + 1);
   }
 
   getPageNumbers(): number[] {
@@ -73,26 +71,13 @@ export class HomePageAdminComponent implements OnInit {
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
-
-  setPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
-
-  getPaginatedSupervisores(): SupervisorWithSelection[] {
+  getPaginatedSupervisores(): Supervisor[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalSupervisores);
     return this.supervisores.slice(startIndex, endIndex);
   }
 
-  editSupervisor(supervisor: SupervisorWithSelection): void {
-    // Asegurarnos de que supervisor no sea nulo antes de asignarlo a selectedSupervisor
+  editSupervisor(supervisor: Supervisor): void {
     this.selectedSupervisor = supervisor ? { ...supervisor } : null;
   }
 
@@ -101,12 +86,15 @@ export class HomePageAdminComponent implements OnInit {
       this.supervisorService.update(this.selectedSupervisor).subscribe(() => {
         console.log('Guardar supervisor editado:', this.selectedSupervisor);
         this.selectedSupervisor = null;
+        
+        // Actualizar la tabla nuevamente después de editar
+        this.consultarTodosSupervisores();
       });
     }
   }
+  
 
-  addSupervisor(): void {
-    // Lógica para agregar un nuevo supervisor
+  agregarSupervisor(): void {
     this.supervisorService.create(this.newSupervisor).subscribe(() => {
       console.log('Agregar supervisor:', this.newSupervisor);
       this.newSupervisor = {
@@ -117,79 +105,48 @@ export class HomePageAdminComponent implements OnInit {
         contrasena: '',
         dni: '',
         numeroTelefonico: ''
-      }; // Limpiar el formulario después de agregar
+      };
+      this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
+      this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
     });
   }
 
-  deleteSupervisor(id: number): void {
-    // Lógica para eliminar un supervisor por su ID
-    this.supervisorService.delete(id).subscribe(
-      () => {
-        console.log('Eliminar supervisor con ID:', id);
-        this.consultarTodosSupervisores();
-      },
-      (error: any) => {
-        console.error('Error al eliminar supervisor:', error);
-      }
-    );
-  }
-
-  selectCheckbox(event: any, supervisor: SupervisorWithSelection): void {
-    supervisor.isSelected = event.target.checked;
-    this.updateRowSelection(supervisor);
-    this.updateIconState();
-  }
-
-  selectAllCheckbox(event: any): void {
-    const checked = event.target.checked;
-    this.supervisores.forEach((supervisor) => {
-      supervisor.isSelected = checked;
-      this.updateRowSelection(supervisor);
-    });
-
-    this.updateIconState();
-  }
-
-  updateRowSelection(supervisor: SupervisorWithSelection): void {
-    const checkboxRow = this.getCheckboxRow(supervisor.id);
-    if (checkboxRow) {
-      if (supervisor.isSelected) {
-        checkboxRow.classList.add('selected');
-      } else {
-        checkboxRow.classList.remove('selected');
-      }
-    }
-  }
-
-  getCheckboxRow(supervisorId: number): HTMLElement | null {
-    const checkboxElement: ElementRef | null = this.getCheckboxElement(supervisorId);
-    if (checkboxElement && checkboxElement.nativeElement) {
-      return checkboxElement.nativeElement.closest('tr');
-    }
-    return null;
-  }
-
-  getCheckboxElement(supervisorId: number): ElementRef | null {
-    return new ElementRef(document.getElementById('checkbox' + supervisorId));
-  }
-  
-  updateIconState(): void {
-    // Verificar si al menos una fila está seleccionada para habilitar los íconos
-    this.isIconsEnabled = this.supervisores.some((supervisor) => supervisor.isSelected);
-  }
-
-  deleteSelectedSupervisors(): void {
-    // Lógica para eliminar supervisores seleccionados
-    const selectedSupervisors = this.supervisores.filter((supervisor) => supervisor.isSelected);
-    selectedSupervisors.forEach((supervisor) => {
-      this.supervisorService.delete(supervisor.id).subscribe(
+  deleteSupervisor(): void {
+    if (this.selectedSupervisorId) {
+      this.supervisorService.delete(this.selectedSupervisorId).subscribe(
         () => {
-          this.supervisores = this.supervisores.filter(s => s.id !== supervisor.id);
+          this.supervisores = this.supervisores.filter(s => s.id !== this.selectedSupervisorId);
+          this.selectedSupervisorId = null;
+          this.updateIconState();
+          this.calculateTotalPages();
+          this.setPage(this.currentPage);
+
+          // Actualizar la tabla nuevamente después de eliminar
+          this.consultarTodosSupervisores();
+
+          // Cerrar el modal después de eliminar exitosamente el supervisor
+          this.modalService.dismissAll();
         },
         (error) => {
           console.log(error);
         }
       );
-    });
+    }
+  }
+
+  selectAll(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const checked = target.checked;
+    this.supervisores.forEach(supervisor => supervisor.isSelected = checked);
+    this.updateIconState(); // Actualizar el estado de los íconos después de seleccionar todos los supervisores
+  }
+
+  selectCheckbox(event: Event, supervisor: Supervisor): void {
+    supervisor.isSelected = (event.target as HTMLInputElement).checked;
+    this.updateIconState(); // Actualizar el estado de los íconos después de seleccionar/deseleccionar un supervisor individual
+  }
+
+  updateIconState(): void {
+    this.isIconsEnabled = this.supervisores.some((supervisor) => supervisor.isSelected);
   }
 }

@@ -1,36 +1,33 @@
-<section class="tw-flex tw-h-screen tw-w-screen">
-    <div class="tw-sm:w-2/3">
-        <section class="tw-px-32 tw-py-52">
-            <header>
-                <h2 class="tw-text-3xl tw-font-medium">Bienvenido</h2>
-                <h3 class="tw-text-xl tw-font-medium tw-py-2">Ingrese sus credenciales</h3>
-            </header>
-            <form class="tw-py-10 flex tw-flex-col">
-                <label class="text-lg font-medium">Correo electrónico</label>
-                <input class="border-2 border-gray-300 rounded-lg p-2" type="text" placeholder="Usuario">
-                <div class="pt-4 flex items-center">
-                    <label class="text-lg font-medium">Contraseña</label>
-                    <a class="text-sm font-medium ml-auto forgot-password-color">¿Olvidaste tu contraseña?</a>
-                </div>
-                <input class="border-2 border-gray-300 rounded-lg p-2" type="password" placeholder="Contraseña">
-                <button class="bg-blue-500 text-white rounded-lg p-2 mt-4">Iniciar Sesión</button>
-            </form>
-            <footer class="flex justify-center pt-12">
-                <a class="text-sm font-medium text-center"><span>
-                    ¿Tienes problemas? Contactate
-                </span>
-                <br>
-                <span>
-                    con un administrador </span></a>
-            </footer>
-        </section>
+<section class="login-container">
+    <div class="login-form">
+      <header>
+        <h2 class="tw-text-3xl tw-font-medium">Bienvenido</h2>
+        <h3 class="tw-text-xl tw-font-medium tw-py-2">Ingrese sus credenciales</h3>
+      </header>
+      <form class="tw-py-10 flex tw-flex-col">
+        <div class="tw-flex tw-flex-col tw-py-2">
+          <label class="text-lg font-medium">Correo electrónico</label>
+          <input class="border-2 border-gray-300 rounded-lg p-2" type="text" placeholder="Usuario">
+        </div>
+        <div class="tw-flex tw-flex-col tw-py-2">
+          <label class="text-lg font-medium">Contraseña</label>
+          <input class="border-2 border-gray-300 rounded-lg p-2" type="password" placeholder="Contraseña">
+        </div>
+        <button class="bg-blue-500 text-white rounded-lg p-2 mt-4">Iniciar Sesión</button>
+        <div class="pt-4">
+          <a class="text-sm font-medium forgot-password-color">¿Olvidaste tu contraseña?</a>
+        </div>
+      </form>
+      <footer class="flex justify-center pt-12">
+        <a class="text-sm font-medium text-center">
+          <span>¿Tienes problemas? Contactate</span>
+          <br>
+          <span>con un administrador</span>
+        </a>
+      </footer>
     </div>
-    <div class="tw-w-screen tw-max-sm:hidden">
-        <img class="tw-h-screen tw-w-full" src="assets/background-login.webp" >
+    <div class="login-image">
+      <img class="tw-h-screen tw-w-full" src="assets/background-login.webp">
     </div>
-
-</section>
-
-<script>
-    
-</script>
+  </section>
+  
