@@ -17,14 +17,16 @@ export class HomePageAdminComponent implements OnInit {
   selectedSupervisor: Supervisor | null = null;
   isIconsEnabled: boolean = false;
   selectedSupervisorId: number | null = null;
+  searchText: string = '';
+  filteredSupervisores: Supervisor[] = [];
   newSupervisor: Supervisor = {
     id: 0,
     nombre: '',
     apellido: '',
     correoElectronico: '',
     contrasena: '',
-    dni: '',
-    numeroTelefonico: ''
+    dni: 0,
+    numeroTelefonico: 0
   };
 
   constructor(private supervisorService: SupervisorService, private modalService: NgbModal) { }
@@ -39,7 +41,7 @@ export class HomePageAdminComponent implements OnInit {
         this.supervisores = supervisores;
         this.totalSupervisores = this.supervisores.length;
         this.calculateTotalPages();
-        this.setPage(1);
+        this.applyFilter(); // Aplicar el filtro inicial
       },
       (error) => {
         console.error('Error al obtener supervisores:', error);
@@ -74,7 +76,7 @@ export class HomePageAdminComponent implements OnInit {
   getPaginatedSupervisores(): Supervisor[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalSupervisores);
-    return this.supervisores.slice(startIndex, endIndex);
+    return this.filteredSupervisores.slice(startIndex, endIndex); // Actualizamos para usar los datos filtrados
   }
 
   editSupervisor(supervisor: Supervisor): void {
@@ -92,7 +94,42 @@ export class HomePageAdminComponent implements OnInit {
       });
     }
   }
+
+  applyFilter(): void {
+    if (!this.searchText.trim()) {
+      this.filteredSupervisores = this.supervisores; // Si el filtro de búsqueda está vacío, muestra todos los supervisores
+    } else {
+      this.filteredSupervisores = this.filterSupervisores();
+    }
+    this.totalSupervisores = this.filteredSupervisores.length;
+    this.calculateTotalPages();
+    this.setPage(1);
+  }
   
+  filterSupervisores(): Supervisor[] {
+    if (!this.searchText.trim()) {
+      return this.supervisores; // Si el filtro de búsqueda está vacío, muestra todos los supervisores
+    }
+  
+    const searchTextLower = this.searchText.toLowerCase();
+    return this.supervisores.filter((supervisor) => {
+      // Combinar todos los campos y buscar en ellos
+      const combinedFields =
+        supervisor.nombre.toLowerCase() +
+        supervisor.apellido.toLowerCase() +
+        supervisor.correoElectronico.toLowerCase() +
+        supervisor.contrasena.toLowerCase() +
+        supervisor.dni.toString() +
+        supervisor.numeroTelefonico.toString();
+  
+      return combinedFields.includes(searchTextLower);
+    });
+  }
+  
+  clearSearch(): void {
+    this.searchText = ''; // Limpiar el filtro de búsqueda
+    this.applyFilter(); // Aplicar el filtro nuevamente para mostrar todos los supervisores
+  }
 
   agregarSupervisor(): void {
     this.supervisorService.create(this.newSupervisor).subscribe(() => {
@@ -103,13 +140,27 @@ export class HomePageAdminComponent implements OnInit {
         apellido: '',
         correoElectronico: '',
         contrasena: '',
-        dni: '',
-        numeroTelefonico: ''
+        dni: 0,
+        numeroTelefonico: 0
       };
       this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
       this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
     });
   }
+  
+  isNewSupervisorValid(): boolean {
+    return (
+      this.newSupervisor.nombre.trim() !== '' &&
+      this.newSupervisor.apellido.trim() !== '' &&
+      this.newSupervisor.correoElectronico.trim() !== '' &&
+      this.newSupervisor.contrasena.trim() !== '' &&
+      !isNaN(Number(this.newSupervisor.dni)) &&
+      this.newSupervisor.dni.toString().length === 8 &&
+      this.newSupervisor.numeroTelefonico !== null && // Verificar que el número telefónico no sea nulo
+      !isNaN(Number(this.newSupervisor.numeroTelefonico))
+    );
+  }
+  
 
   deleteSupervisor(): void {
     if (this.selectedSupervisorId) {

@@ -4,7 +4,7 @@ export interface Supervisor {
     apellido: string;
     correoElectronico: string;
     contrasena: string;
-    dni: string;
-    numeroTelefonico: string;
+    dni: number;
+    numeroTelefonico: number;
     isSelected?: boolean;
 }
