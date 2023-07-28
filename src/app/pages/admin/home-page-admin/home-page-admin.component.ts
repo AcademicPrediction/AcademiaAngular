@@ -12,7 +12,7 @@ export class HomePageAdminComponent implements OnInit {
   supervisores: Supervisor[] = [];
   totalSupervisores: number = 0;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 7;
   totalPages: number = 1;
   selectedSupervisor: Supervisor | null = null;
   isIconsEnabled: boolean = false;
@@ -25,8 +25,8 @@ export class HomePageAdminComponent implements OnInit {
     apellido: '',
     correoElectronico: '',
     contrasena: '',
-    dni: 0,
-    numeroTelefonico: 0
+    dni: null, // Inicializar con null en lugar de 0
+    numeroTelefonico: null // Inicializar con null en lugar de 0
   };
 
   constructor(private supervisorService: SupervisorService, private modalService: NgbModal) { }
@@ -110,7 +110,7 @@ export class HomePageAdminComponent implements OnInit {
     if (!this.searchText.trim()) {
       return this.supervisores; // Si el filtro de búsqueda está vacío, muestra todos los supervisores
     }
-  
+
     const searchTextLower = this.searchText.toLowerCase();
     return this.supervisores.filter((supervisor) => {
       // Combinar todos los campos y buscar en ellos
@@ -119,16 +119,20 @@ export class HomePageAdminComponent implements OnInit {
         supervisor.apellido.toLowerCase() +
         supervisor.correoElectronico.toLowerCase() +
         supervisor.contrasena.toLowerCase() +
-        supervisor.dni.toString() +
-        supervisor.numeroTelefonico.toString();
-  
+        (supervisor.dni?.toString() || '') + // Usar operador de encadenamiento opcional para manejar valores nulos
+        (supervisor.numeroTelefonico?.toString() || ''); // Usar operador de encadenamiento opcional para manejar valores nulos
+
       return combinedFields.includes(searchTextLower);
     });
   }
-  
+
   clearSearch(): void {
     this.searchText = ''; // Limpiar el filtro de búsqueda
     this.applyFilter(); // Aplicar el filtro nuevamente para mostrar todos los supervisores
+  }
+
+  agregarSupervisorModal(content: any): void {
+    this.modalService.open(content, { centered: true }); // Abrir el modal para agregar supervisor
   }
 
   agregarSupervisor(): void {
@@ -140,8 +144,8 @@ export class HomePageAdminComponent implements OnInit {
         apellido: '',
         correoElectronico: '',
         contrasena: '',
-        dni: 0,
-        numeroTelefonico: 0
+        dni: null,
+        numeroTelefonico: null
       };
       this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
       this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
@@ -149,18 +153,40 @@ export class HomePageAdminComponent implements OnInit {
   }
   
   isNewSupervisorValid(): boolean {
-    return (
-      this.newSupervisor.nombre.trim() !== '' &&
-      this.newSupervisor.apellido.trim() !== '' &&
-      this.newSupervisor.correoElectronico.trim() !== '' &&
-      this.newSupervisor.contrasena.trim() !== '' &&
+    const validNombre = this.newSupervisor.nombre.trim() !== '';
+    const validApellido = this.newSupervisor.apellido.trim() !== '';
+    const validCorreoElectronico = this.newSupervisor.correoElectronico.trim() !== '';
+
+    // Verificar que el DNI sea numérico, no sea null, no sea 0 y tenga 8 dígitos
+    const validDNI =
+      this.newSupervisor.dni !== null && // Verificar que no sea null
       !isNaN(Number(this.newSupervisor.dni)) &&
+      this.newSupervisor.dni !== 0 && // Verificar que no sea 0
       this.newSupervisor.dni.toString().length === 8 &&
-      this.newSupervisor.numeroTelefonico !== null && // Verificar que el número telefónico no sea nulo
-      !isNaN(Number(this.newSupervisor.numeroTelefonico))
+      !this.supervisores.some(supervisor => supervisor.dni === this.newSupervisor.dni);
+
+    // Verificar que el número telefónico sea numérico, tenga 9 dígitos y no esté registrado (o sea null)
+    const validNumeroTelefonico =
+      this.newSupervisor.numeroTelefonico === null || // Verificar si es null
+      (
+        !isNaN(Number(this.newSupervisor.numeroTelefonico)) &&
+        this.newSupervisor.numeroTelefonico.toString().length === 9 &&
+        !this.supervisores.some(supervisor => supervisor.numeroTelefonico === this.newSupervisor.numeroTelefonico)
+      );
+
+    // Verificar que el correo electrónico no esté registrado
+    const validCorreoElectronicoUnico =
+      !this.supervisores.some(supervisor => supervisor.correoElectronico === this.newSupervisor.correoElectronico);
+
+    return (
+      validNombre &&
+      validApellido &&
+      validCorreoElectronico &&
+      validDNI &&
+      validNumeroTelefonico &&
+      validCorreoElectronicoUnico
     );
   }
-  
 
   deleteSupervisor(): void {
     if (this.selectedSupervisorId) {
@@ -199,5 +225,5 @@ export class HomePageAdminComponent implements OnInit {
 
   updateIconState(): void {
     this.isIconsEnabled = this.supervisores.some((supervisor) => supervisor.isSelected);
-  }
+  }  
 }

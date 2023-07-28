@@ -170,6 +170,24 @@
       "contrasena": "lee789",
       "dni": 54321876,
       "numeroTelefonico": 987612345
+    },
+    {
+      "id": 21,
+      "nombre": "Mark Albert",
+      "apellido": "Schmidt Avila",
+      "correoElectronico": "markalbert_09@hotmail.com",
+      "contrasena": "aea",
+      "dni": 78451232,
+      "numeroTelefonico": null
+    },
+    {
+      "id": 22,
+      "nombre": "Mark Albert",
+      "apellido": "Schmidt Avila",
+      "correoElectronico": "sdfsd@hotmail.com",
+      "contrasena": "asdasd",
+      "dni": 12345675,
+      "numeroTelefonico": 999999993
     }
   ]
 }
