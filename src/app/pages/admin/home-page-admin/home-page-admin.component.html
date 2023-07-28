@@ -6,11 +6,21 @@
       <div class="table-responsive">
         <div class="table-wrapper">
           <div class="table-title">
-            <div class="row">
+            <div class="row align-items-center">
               <div class="col-sm-6">
                 <h2>Administrador de <b>Supervisores</b></h2>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-6 col-md-3 mt-3 mt-md-0">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="searchText" (input)="applyFilter()">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary search-btn" type="button" (click)="clearSearch()">
+                      <i class="fa" [ngClass]="{'fa-times': searchText, 'fa-trash': !searchText}"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3 mt-3 mt-md-0">
                 <button class="btn btn-success" data-toggle="modal" data-target="#addSupervisorModal">
                   <i class="material-icons">&#xE147;</i>
                   <span>Agregar Nuevo Supervisor</span>
@@ -92,47 +102,49 @@
   aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Agregar Supervisor</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Supervisor</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="addNombre">Nombre</label>
+          <input type="text" class="form-control" id="addNombre" [(ngModel)]="newSupervisor.nombre" name="addNombre"
+            required>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="addNombre">Nombre</label>
-            <input type="text" class="form-control" id="addNombre" [(ngModel)]="newSupervisor.nombre" name="addNombre"
-              required>
-          </div>
-          <div class="form-group">
-            <label for="addApellido">Apellido</label>
-            <input type="text" class="form-control" id="addApellido" [(ngModel)]="newSupervisor.apellido"
-              name="addApellido" required>
-          </div>
-          <div class="form-group">
-            <label for="addCorreoElectronico">Correo Electrónico</label>
-            <input type="email" class="form-control" id="addCorreoElectronico"
-              [(ngModel)]="newSupervisor.correoElectronico" name="addCorreoElectronico" required>
-          </div>
-          <div class="form-group">
-            <label for="addContrasena">Contraseña</label>
-            <input type="text" class="form-control" id="addContrasena" [(ngModel)]="newSupervisor.contrasena"
-              name="addContrasena" required>
-          </div>
-          <div class="form-group">
-            <label for="addDNI">DNI</label>
-            <input type="text" class="form-control" id="addDNI" [(ngModel)]="newSupervisor.dni" name="addDNI" required>
-          </div>
-          <div class="form-group">
-            <label for="addNumeroTelefonico">Número Telefónico</label>
-            <input type="text" class="form-control" id="addNumeroTelefonico"
-              [(ngModel)]="newSupervisor.numeroTelefonico" name="addNumeroTelefonico" required>
-          </div>
+        <div class="form-group">
+          <label for="addApellido">Apellido</label>
+          <input type="text" class="form-control" id="addApellido" [(ngModel)]="newSupervisor.apellido"
+            name="addApellido" required>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-          <button class="btn btn-success" (click)="agregarSupervisor()" data-dismiss="modal">Agregar</button>
+        <div class="form-group">
+          <label for="addCorreoElectronico">Correo Electrónico</label>
+          <input type="email" class="form-control" id="addCorreoElectronico"
+            [(ngModel)]="newSupervisor.correoElectronico" name="addCorreoElectronico" required>
         </div>
-      </form>
+        <div class="form-group">
+          <label for="addContrasena">Contraseña</label>
+          <input type="text" class="form-control" id="addContrasena" [(ngModel)]="newSupervisor.contrasena"
+            name="addContrasena" required>
+        </div>
+        <div class="form-group">
+          <label for="addDNI">DNI</label>
+          <input type="number" class="form-control" id="addDNI" [(ngModel)]="newSupervisor.dni" name="addDNI"
+            required>
+          <small class="text-muted">El DNI debe tener exactamente 8 dígitos numéricos.</small>
+        </div>
+        <div class="form-group">
+          <label for="addNumeroTelefonico">Número Telefónico</label>
+          <input type="number" class="form-control" id="addNumeroTelefonico"
+            [(ngModel)]="newSupervisor.numeroTelefonico" name="addNumeroTelefonico" required>
+          <small class="text-muted">El número telefónico debe ser numérico.</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button class="btn btn-success" [disabled]="!isNewSupervisorValid()" (click)="agregarSupervisor()"
+          data-dismiss="modal">Agregar</button>
+      </div>
     </div>
   </div>
 </div>
