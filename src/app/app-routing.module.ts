@@ -5,8 +5,9 @@ import { HomePageAdminComponent } from './pages/admin/home-page-admin/home-page-
 import { HomePageSupervisorComponent } from './pages/supervisor/home-page-supervisor/home-page-supervisor.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirecciona a /login al cargar la app
   { path: 'homepage-admin', component: HomePageAdminComponent },
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent },
   { path: 'homepage', component: HomePageSupervisorComponent },
 ];
 
@@ -14,6 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}

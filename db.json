@@ -189,5 +189,21 @@
       "dni": 12345675,
       "numeroTelefonico": 999999993
     }
+  ],
+  "admin": [
+    {
+      "id": 1,
+      "nombre": "Mark Albert",
+      "apellido": "Schmidt Avila",
+      "correoElectronico": "u201810723@upc.edu.pe",
+      "contrasena": "schmidt"
+    },
+    {
+      "id": 2,
+      "nombre": "Jose Adrian",
+      "apellido": "Pain Peralta",
+      "correoElectronico": "jose@hotmail.com",
+      "contrasena": "jose_hot"
+    }
   ]
 }
