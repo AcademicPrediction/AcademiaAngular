@@ -12,6 +12,7 @@ import { HomePageAdminComponent } from './pages/admin/home-page-admin/home-page-
 import { NavBarAdminComponent } from './components/nav-bar-admin/nav-bar-admin.component';
 import { HomePageSupervisorComponent } from './pages/supervisor/home-page-supervisor/home-page-supervisor.component';
 import { NavBarSupervisorComponent } from './components/nav-bar-supervisor/nav-bar-supervisor.component';
+import { PredictionPageComponent } from './pages/supervisor/prediction-page/prediction-page.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NavBarSupervisorComponent } from './components/nav-bar-supervisor/nav-b
     NavBarAdminComponent,
     HomePageSupervisorComponent,
     NavBarSupervisorComponent,
+    PredictionPageComponent,
   ],
   imports: [
     BrowserModule,

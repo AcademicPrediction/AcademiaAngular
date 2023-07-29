@@ -1,0 +1,17 @@
+.default-button {
+  background-color: #3E86F5;
+  border-color: #3E86F5;
+}
+
+/* styles.css o tu-componente.component.css */
+.dotted-line {
+  border-bottom: 2px dotted #ccc;
+}
+
+.title-color {
+  color: #3E86F5;
+}
+
+.box-shadow {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
