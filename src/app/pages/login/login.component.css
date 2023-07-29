@@ -46,3 +46,21 @@ button.bg-green-500 {
 label i.fas {
   margin-right: 8px; /* Espacio entre el icono y el título del input */
 }
+
+/* Estilos para el contenedor flex del icono y el input */
+.password-container {
+  position: relative;
+  align-items: center;
+}
+
+/* Estilo para el icono de ojo */
+.password-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Ajustar el ancho del input */
+.tw-flex-grow {
+  flex-grow: 1;
+}

@@ -131,9 +131,10 @@
       "nombre": "Mia",
       "apellido": "Martinez",
       "correoElectronico": "mia_martinez@example.com",
-      "contrasena": "martinez123",
+      "contrasena": "martinez1233",
       "dni": 87654321,
-      "numeroTelefonico": 987654321
+      "numeroTelefonico": 987654321,
+      "isSelected": true
     },
     {
       "id": 17,

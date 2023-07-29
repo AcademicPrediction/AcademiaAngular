@@ -12,8 +12,9 @@ import { Admin } from 'src/app/model/admin';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  showPassword: boolean = false;
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router) { }
 
   onLogin() {
     if (!this.email || !this.password) {
@@ -34,5 +35,9 @@ export class LoginComponent {
         }
       }
     );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
