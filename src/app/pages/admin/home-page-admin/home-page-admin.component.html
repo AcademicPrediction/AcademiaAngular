@@ -47,11 +47,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let supervisor of getPaginatedSupervisores()">
+              <tr *ngFor="let supervisor of getPaginatedSupervisores(); let i = index;">
                 <td>
                   <span class="custom-checkbox">
                     <input type="checkbox" [id]="'checkbox' + supervisor.id" name="options[]" [value]="supervisor.id"
-                      [checked]="supervisor.isSelected" (change)="selectCheckbox($event, supervisor)">
+                      [checked]="selectedSupervisoresIds.includes(supervisor.id)" (change)="selectCheckbox($event, supervisor)">
                     <label [for]="'checkbox' + supervisor.id"></label>
                   </span>
                 </td>
@@ -63,13 +63,13 @@
                 <td>{{ supervisor.numeroTelefonico }}</td>
                 <td>
                   <a href="#" class="edit" (click)="editSupervisor(supervisor)" data-toggle="modal"
-                    [attr.data-target]="supervisor.isSelected ? '#editSupervisorModal' : null"
-                    [ngClass]="{ 'disabled': !supervisor.isSelected }">
+                    [attr.data-target]="selectedSupervisor ? '#editSupervisorModal' : null"
+                    [ngClass]="{ 'disabled': !selectedSupervisor || !selectedSupervisoresIds.includes(supervisor.id) }">
                     <i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i>
                   </a>
                   <a href="#" class="delete" (click)="selectedSupervisorId = supervisor.id" data-toggle="modal"
-                    [attr.data-target]="supervisor.isSelected ? '#deleteSupervisorModal' : null"
-                    [ngClass]="{ 'disabled': !supervisor.isSelected }">
+                    [attr.data-target]="selectedSupervisor ? '#deleteSupervisorModal' : null"
+                    [ngClass]="{ 'disabled': !selectedSupervisor || !selectedSupervisoresIds.includes(supervisor.id) }">
                     <i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i>
                   </a>
                 </td>
@@ -77,8 +77,7 @@
             </tbody>
           </table>
           <div class="clearfix">
-            <div class="hint-text">Mostrando <b>{{ getPaginatedSupervisores().length }}</b> de <b>{{ totalSupervisores
-                }}</b> registros</div>
+            <div class="hint-text">Mostrando <b>{{ getPaginatedSupervisores().length }}</b> de <b>{{ totalSupervisores }}</b> registros</div>
             <ul class="pagination">
               <li class="page-item" [class.disabled]="currentPage === 1">
                 <button class="page-link" (click)="setPage(currentPage - 1)">Anterior</button>

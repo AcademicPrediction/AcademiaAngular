@@ -14,6 +14,7 @@ export class HomePageAdminComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 7;
   totalPages: number = 1;
+  selectedSupervisoresIds: number[] = []; // Nueva variable para almacenar los IDs de los supervisores seleccionados
   selectedSupervisor: Supervisor | null = null;
   isIconsEnabled: boolean = false;
   selectedSupervisorId: number | null = null;
@@ -161,18 +162,15 @@ export class HomePageAdminComponent implements OnInit {
     const validDNI =
       this.newSupervisor.dni !== null && // Verificar que no sea null
       !isNaN(Number(this.newSupervisor.dni)) &&
-      this.newSupervisor.dni !== 0 && // Verificar que no sea 0
       this.newSupervisor.dni.toString().length === 8 &&
       !this.supervisores.some(supervisor => supervisor.dni === this.newSupervisor.dni);
 
-    // Verificar que el número telefónico sea numérico, tenga 9 dígitos y no esté registrado (o sea null)
+    // Verificar que el número telefónico sea numérico, no sea null, no sea 0 y tenga 9 dígitos
     const validNumeroTelefonico =
-      this.newSupervisor.numeroTelefonico === null || // Verificar si es null
-      (
-        !isNaN(Number(this.newSupervisor.numeroTelefonico)) &&
-        this.newSupervisor.numeroTelefonico.toString().length === 9 &&
-        !this.supervisores.some(supervisor => supervisor.numeroTelefonico === this.newSupervisor.numeroTelefonico)
-      );
+      this.newSupervisor.numeroTelefonico !== null && // Verificar que no sea null
+      !isNaN(Number(this.newSupervisor.numeroTelefonico)) &&
+      this.newSupervisor.numeroTelefonico.toString().length === 9 &&
+      !this.supervisores.some(supervisor => supervisor.numeroTelefonico === this.newSupervisor.numeroTelefonico);
 
     // Verificar que el correo electrónico no esté registrado
     const validCorreoElectronicoUnico =
@@ -194,6 +192,7 @@ export class HomePageAdminComponent implements OnInit {
         () => {
           this.supervisores = this.supervisores.filter(s => s.id !== this.selectedSupervisorId);
           this.selectedSupervisorId = null;
+          this.selectedSupervisoresIds = this.selectedSupervisoresIds.filter(id => id !== this.selectedSupervisorId);
           this.updateIconState();
           this.calculateTotalPages();
           this.setPage(this.currentPage);
@@ -211,19 +210,45 @@ export class HomePageAdminComponent implements OnInit {
     }
   }
 
-  selectAll(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    const checked = target.checked;
-    this.supervisores.forEach(supervisor => supervisor.isSelected = checked);
-    this.updateIconState(); // Actualizar el estado de los íconos después de seleccionar todos los supervisores
-  }
+selectAll(event: Event): void {
+  const target = event.target as HTMLInputElement;
+  const checked = target.checked;
+  this.selectedSupervisoresIds = checked ? this.supervisores.map(supervisor => supervisor.id) : [];
+  this.updateIconState(); // Actualizar el estado de los íconos después de seleccionar todos los supervisores
 
-  selectCheckbox(event: Event, supervisor: Supervisor): void {
-    supervisor.isSelected = (event.target as HTMLInputElement).checked;
-    this.updateIconState(); // Actualizar el estado de los íconos después de seleccionar/deseleccionar un supervisor individual
+  // Si se han seleccionado todos los supervisores, asignamos el supervisor seleccionado
+  if (checked && this.selectedSupervisoresIds.length === this.supervisores.length) {
+    this.selectedSupervisor = this.supervisores[0] || null;
+    this.selectedSupervisorId = this.selectedSupervisoresIds[0] || null;
+  } else {
+    // Si se desmarcan todos los checkboxes, reiniciamos la selección
+    this.selectedSupervisor = null;
+    this.selectedSupervisorId = null;
   }
+}
 
-  updateIconState(): void {
-    this.isIconsEnabled = this.supervisores.some((supervisor) => supervisor.isSelected);
-  }  
+selectCheckbox(event: Event, supervisor: Supervisor): void {
+  const supervisorId = supervisor.id;
+  if ((event.target as HTMLInputElement).checked) {
+    this.selectedSupervisoresIds.push(supervisorId);
+  } else {
+    this.selectedSupervisoresIds = this.selectedSupervisoresIds.filter(id => id !== supervisorId);
+  }
+  this.updateIconState(); // Actualizar el estado de los íconos después de seleccionar/deseleccionar un supervisor individual
+
+  // Si solo se selecciona un supervisor individual, asignamos el supervisor seleccionado
+  if (this.selectedSupervisoresIds.length === 1) {
+    this.selectedSupervisor = supervisor;
+    this.selectedSupervisorId = supervisorId;
+  } else {
+    // Si se deselecciona el supervisor individual, reiniciamos la selección
+    this.selectedSupervisor = null;
+    this.selectedSupervisorId = null;
+  }
+}
+
+updateIconState(): void {
+  this.isIconsEnabled = this.selectedSupervisoresIds.length > 0;
+}
+  
 }

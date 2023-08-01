@@ -1,3 +1,4 @@
+// supervisor.interface.ts
 export interface Supervisor {
     id: number;
     nombre: string;
@@ -6,5 +7,5 @@ export interface Supervisor {
     contrasena: string;
     dni: number | null;
     numeroTelefonico: number | null;
-    isSelected?: boolean;
-}
+  }
+  

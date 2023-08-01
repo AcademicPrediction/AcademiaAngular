@@ -20,7 +20,7 @@
     },
     {
       "id": 4,
-      "nombre": "Jane",
+      "nombre": "Jane1234",
       "apellido": "Smith",
       "correoElectronico": "jane_smith@example.com",
       "contrasena": "smith456",
@@ -53,24 +53,6 @@
       "contrasena": "brown123",
       "dni": 87654321,
       "numeroTelefonico": 987654321
-    },
-    {
-      "id": 8,
-      "nombre": "Olivia",
-      "apellido": "Jones",
-      "correoElectronico": "olivia_jones@example.com",
-      "contrasena": "jones789",
-      "dni": 54321876,
-      "numeroTelefonico": 987612345
-    },
-    {
-      "id": 9,
-      "nombre": "William",
-      "apellido": "Davis",
-      "correoElectronico": "william_davis@example.com",
-      "contrasena": "davis456",
-      "dni": 43218765,
-      "numeroTelefonico": 654321987
     },
     {
       "id": 10,
@@ -174,21 +156,12 @@
     },
     {
       "id": 21,
-      "nombre": "Mark Albert",
-      "apellido": "Schmidt Avila",
-      "correoElectronico": "markalbert_09@hotmail.com",
-      "contrasena": "aea",
-      "dni": 78451232,
-      "numeroTelefonico": null
-    },
-    {
-      "id": 22,
-      "nombre": "Mark Albert",
-      "apellido": "Schmidt Avila",
-      "correoElectronico": "sdfsd@hotmail.com",
-      "contrasena": "asdasd",
-      "dni": 12345675,
-      "numeroTelefonico": 999999993
+      "nombre": "Juan Carlos",
+      "apellido": "Bodoque de la Quijada",
+      "correoElectronico": "bodoque_hot@hotmail.com",
+      "contrasena": "bodoque",
+      "dni": 23547898,
+      "numeroTelefonico": 986523658
     }
   ],
   "admin": [
