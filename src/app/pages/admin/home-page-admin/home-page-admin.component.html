@@ -13,11 +13,9 @@
               <div class="col-sm-6 col-md-3 mt-3 mt-md-0">
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="searchText" (input)="applyFilter()">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary search-btn" type="button" (click)="clearSearch()">
-                      <i class="fa" [ngClass]="{'fa-times': searchText, 'fa-trash': !searchText}"></i>
-                    </button>
-                  </div>
+                  <button class="btn-outline-secondary clear-button" (click)="clearSearch()" *ngIf="searchText">
+                    <i class="fa fa-times"></i>
+                  </button>
                 </div>
               </div>
               <div class="col-sm-6 col-md-3 mt-3 mt-md-0">
