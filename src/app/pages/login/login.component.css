@@ -1,3 +1,66 @@
-.forgot-password-color{
-    color: #0C2A92;
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-image {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .login-container {
+    flex-direction: row;
+  }
+
+  .login-form {
+    margin-right: 20px;
+  }
+
+  .login-image {
+    display: block;
+    flex: 1;
+    height: 100vh;
+  }
+}
+
+.forgot-password-color {
+  color: #0C2A92;
+}
+
+/* Estilo para el botón de inicio de sesión */
+button.bg-green-500 {
+  background-color: #34D399;
+  color: white;
+  width: 100%;
+}
+
+/* Estilos para los iconos en los títulos de los inputs */
+label i.fas {
+  margin-right: 8px; /* Espacio entre el icono y el título del input */
+}
+
+/* Estilos para el contenedor flex del icono y el input */
+.password-container {
+  position: relative;
+  align-items: center;
+}
+
+/* Estilo para el icono de ojo */
+.password-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Ajustar el ancho del input */
+.tw-flex-grow {
+  flex-grow: 1;
 }

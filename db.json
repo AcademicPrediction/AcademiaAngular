@@ -2,32 +2,182 @@
   "supervisor": [
     {
       "id": 1,
-      "nombre": "Juan",
-      "apellido": "Pérez",
-      "correoElectronico": "juan.perez@example.com",
-      "contrasena": "clave123",
-      "dni": "12345678",
-      "numeroTelefonico": "555-1234",
-      "isSelected": true
-    },
-    {
-      "id": 2,
-      "nombre": "María",
-      "apellido": "Avila",
-      "correoElectronico": "maria.lopez@example.com",
-      "contrasena": "clave456",
-      "dni": "87654321",
-      "numeroTelefonico": "555-5678",
-      "isSelected": true
-    },
-    {
-      "id": 3,
       "nombre": "Mark Albert",
       "apellido": "Schmidt Avila",
       "correoElectronico": "markalbert_09@hotmail.com",
-      "contrasena": "123",
-      "dni": "45877622",
-      "numeroTelefonico": "999999999"
+      "contrasena": "muse",
+      "dni": 45877622,
+      "numeroTelefonico": 999999999
+    },
+    {
+      "id": 3,
+      "nombre": "John",
+      "apellido": "Doe",
+      "correoElectronico": "johndoe@example.com",
+      "contrasena": "johndoe123",
+      "dni": 12345678,
+      "numeroTelefonico": 987654321
+    },
+    {
+      "id": 4,
+      "nombre": "Jane1234",
+      "apellido": "Smith",
+      "correoElectronico": "jane_smith@example.com",
+      "contrasena": "smith456",
+      "dni": 87654321,
+      "numeroTelefonico": 123456789
+    },
+    {
+      "id": 5,
+      "nombre": "Michael",
+      "apellido": "Johnson",
+      "correoElectronico": "michael_johnson@example.com",
+      "contrasena": "johnson789",
+      "dni": 54321678,
+      "numeroTelefonico": 987612345
+    },
+    {
+      "id": 6,
+      "nombre": "Emma",
+      "apellido": "Williams",
+      "correoElectronico": "emma_williams@example.com",
+      "contrasena": "williams456",
+      "dni": 43218765,
+      "numeroTelefonico": 654321987
+    },
+    {
+      "id": 7,
+      "nombre": "Alexander",
+      "apellido": "Brown",
+      "correoElectronico": "alex_brown@example.com",
+      "contrasena": "brown123",
+      "dni": 87654321,
+      "numeroTelefonico": 987654321
+    },
+    {
+      "id": 10,
+      "nombre": "Ava",
+      "apellido": "Miller",
+      "correoElectronico": "ava_miller@example.com",
+      "contrasena": "miller123",
+      "dni": 87654321,
+      "numeroTelefonico": 987654321
+    },
+    {
+      "id": 11,
+      "nombre": "James",
+      "apellido": "Wilson",
+      "correoElectronico": "james_wilson@example.com",
+      "contrasena": "wilson789",
+      "dni": 54321678,
+      "numeroTelefonico": 987612345
+    },
+    {
+      "id": 12,
+      "nombre": "Sophia",
+      "apellido": "Taylor",
+      "correoElectronico": "sophia_taylor@example.com",
+      "contrasena": "taylor456",
+      "dni": 43218765,
+      "numeroTelefonico": 654321987
+    },
+    {
+      "id": 13,
+      "nombre": "Benjamin",
+      "apellido": "Anderson",
+      "correoElectronico": "ben_anderson@example.com",
+      "contrasena": "anderson123",
+      "dni": 87654321,
+      "numeroTelefonico": 987654321
+    },
+    {
+      "id": 14,
+      "nombre": "Isabella",
+      "apellido": "Clark",
+      "correoElectronico": "isabella_clark@example.com",
+      "contrasena": "clark789",
+      "dni": 54321876,
+      "numeroTelefonico": 987612345
+    },
+    {
+      "id": 15,
+      "nombre": "Alexander",
+      "apellido": "Rodriguez",
+      "correoElectronico": "alex_rodriguez@example.com",
+      "contrasena": "rodriguez456",
+      "dni": 43218765,
+      "numeroTelefonico": 654321987
+    },
+    {
+      "id": 16,
+      "nombre": "Mia",
+      "apellido": "Martinez",
+      "correoElectronico": "mia_martinez@example.com",
+      "contrasena": "martinez1233",
+      "dni": 87654321,
+      "numeroTelefonico": 987654321,
+      "isSelected": true
+    },
+    {
+      "id": 17,
+      "nombre": "Ethan",
+      "apellido": "Lopez",
+      "correoElectronico": "ethan_lopez@example.com",
+      "contrasena": "lopez789",
+      "dni": 54321678,
+      "numeroTelefonico": 987612345
+    },
+    {
+      "id": 18,
+      "nombre": "Charlotte",
+      "apellido": "Hernandez",
+      "correoElectronico": "charlotte_hernandez@example.com",
+      "contrasena": "hernandez456",
+      "dni": 43218765,
+      "numeroTelefonico": 654321987
+    },
+    {
+      "id": 19,
+      "nombre": "Michael",
+      "apellido": "Garcia",
+      "correoElectronico": "michael_garcia@example.com",
+      "contrasena": "garcia123",
+      "dni": 87654321,
+      "numeroTelefonico": 987654321
+    },
+    {
+      "id": 20,
+      "nombre": "Harper",
+      "apellido": "Lee",
+      "correoElectronico": "harper_lee@example.com",
+      "contrasena": "lee789",
+      "dni": 54321876,
+      "numeroTelefonico": 987612345
+    },
+    {
+      "id": 21,
+      "nombre": "Juan Carlos",
+      "apellido": "Bodoque de la Quijada",
+      "correoElectronico": "bodoque_hot@hotmail.com",
+      "contrasena": "bodoque",
+      "dni": 23547898,
+      "numeroTelefonico": 986523658
+    }
+  ],
+  "admin": [
+    {
+      "id": 1,
+      "nombre": "Mark Albert",
+      "apellido": "Schmidt Avila",
+      "correoElectronico": "u201810723@upc.edu.pe",
+      "contrasena": "schmidt"
+    },
+    {
+      "id": 2,
+      "nombre": "Jose Adrian",
+      "apellido": "Pain Peralta",
+      "correoElectronico": "jose@hotmail.com",
+      "contrasena": "jose_hot"
     }
   ]
 }

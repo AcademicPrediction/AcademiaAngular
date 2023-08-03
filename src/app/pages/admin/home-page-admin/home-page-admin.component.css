@@ -7,7 +7,7 @@
   /* Estilos para el navbar vertical */
   .vertical-navbar {
 	width: 200px;
-	background-color: #f0f0f0;
+	background-color: #ffffff;
   }
   
   /* Estilos para el contenido a la derecha del navbar */
@@ -17,8 +17,8 @@
 	margin-left: 5%;
   }
   
-  /* Estilos para hacer responsive */
-  @media screen and (max-width: 768px) {
+/* Estilos para hacer responsive */
+@media screen and (max-width: 768px) {
 	.app-container {
 	  flex-direction: column;
 	  height: auto;
@@ -32,6 +32,29 @@
 	.content {
 	  margin-left: 0;
 	  margin-top: 10px;
+	}
+  
+	.table-title .row {
+	  display: flex;
+	  flex-wrap: wrap;
+	  align-items: center;
+	  justify-content: space-between;
+	}
+  
+	.table-title .col-sm-6,
+	.table-title .col-md-3 {
+	  flex-basis: 100%;
+	  margin-bottom: 10px;
+	}
+  
+	.table-title .search-btn-container {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	}
+  
+	.table-title .col-sm-6 button {
+	  margin-left: 10px;
 	}
   }
   
@@ -306,3 +329,26 @@ table.table {
   border-color: #fff;
   background: #3E86F5;
 }
+
+/* Estilo para el input */
+.form-control {
+	border-radius: 10px;
+	padding-right: 30px;
+  }
+  
+  /* Estilo para el botón de limpiar */
+  .clear-button {
+	border-radius: 10px;
+	background-color: #f44336;
+	color: white;
+	border-color: #f44336;
+	cursor: pointer;
+	width: 30px; /* Ancho fijo del botón */
+	z-index: 1; /* Asegurar que el botón esté encima del input */
+	position: relative; /* Asegurar que el botón se posicione correctamente */
+	margin-left: 1em; /* Ajustar el margen negativo para superponerlo al input */
+  }
+  
+  .clear-button i {
+	margin-right: 1px;
+  }
