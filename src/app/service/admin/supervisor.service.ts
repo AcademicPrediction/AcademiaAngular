@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Supervisor } from 'src/app/model/supervisor';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SupervisorService {
-  private apiUrl = 'http://localhost:3000/supervisor';
+  private apiUrl =
+    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/supervisors';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<Supervisor[]> {
     return this.http.get<Supervisor[]>(this.apiUrl);
@@ -19,8 +20,8 @@ export class SupervisorService {
     return this.http.post<Supervisor>(this.apiUrl, supervisor);
   }
 
-  update(supervisor: Supervisor): Observable<Supervisor> {
-    const url = `${this.apiUrl}/${supervisor.id}`;
+  update(supervisor: Supervisor, id: Number): Observable<Supervisor> {
+    const url = `${this.apiUrl}/${id}`;
     return this.http.put<Supervisor>(url, supervisor);
   }
 
