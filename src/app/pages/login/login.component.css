@@ -1,43 +1,10 @@
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.login-form {
-  padding: 32px;
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-image {
-  display: none;
-}
-
-@media (min-width: 640px) {
-  .login-container {
-    flex-direction: row;
-  }
-
-  .login-form {
-    margin-right: 20px;
-  }
-
-  .login-image {
-    display: block;
-    flex: 1;
-    height: 100vh;
-  }
-}
-
 .forgot-password-color {
-  color: #0C2A92;
+  color: #0c2a92;
 }
 
 /* Estilo para el botón de inicio de sesión */
 button.bg-green-500 {
-  background-color: #34D399;
+  background-color: #34d399;
   color: white;
   width: 100%;
 }
