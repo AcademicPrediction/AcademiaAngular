@@ -1,11 +1,10 @@
 // supervisor.interface.ts
 export interface Supervisor {
-    id: number;
-    nombre: string;
-    apellido: string;
-    correoElectronico: string;
-    contrasena: string;
-    dni: number | null;
-    numeroTelefonico: number | null;
-  }
-  
+  id: number;
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  dni: number | null;
+  phoneNumber: number | null;
+}
