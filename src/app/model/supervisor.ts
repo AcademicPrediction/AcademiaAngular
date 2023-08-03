@@ -5,6 +5,6 @@ export interface Supervisor {
   lastName: string;
   email: string;
   password: string;
-  dni: number | null;
-  phoneNumber: number | null;
+  dni: string;
+  phoneNumber: string;
 }
