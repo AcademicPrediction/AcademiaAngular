@@ -1,4 +1,4 @@
-<main class="tw-flex tw-h-screen">
+<body class="tw-flex tw-h-screen">
   <app-nav-bar-supervisor></app-nav-bar-supervisor>
 
   <section class="tw-flex-1 tw-px-24 tw-py-28">
@@ -7,7 +7,7 @@
     >
       Historial de Predicciones
     </h1>
-    <section
+    <header
       class="table-title-color tw-flex tw-items-center tw-px-5 tw-py-5 tw-rounded-sm tw-text-white"
     >
       <h2 class="tw-flex-grow tw-text-2xl tw-font-semibold">Historial</h2>
@@ -20,7 +20,7 @@
           (input)="applyFilter()"
         />
         <button
-          class="btn search-btn tw-ml-5"
+          class="btn search-btn tw-text-white tw-ml-5"
           type="button"
           (click)="clearSearch()"
           [hidden]="!searchText"
@@ -33,7 +33,7 @@
           ></i>
         </button>
       </div>
-    </section>
+    </header>
 
     <table
       class="table table-hover [&>thead>tr>th]:tw-py-3 [&>thead>tr>th]:tw-px-4 [&>tbody>tr>td]:tw-py-3 [&>tbody>tr>td]:tw-px-4"
@@ -61,7 +61,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="clearfix">
+    <footer class="clearfix">
       <div class="hint-text">
         Mostrando <b>{{ getPaginatedPredictiones().length }}</b> de
         <b>{{ totalPredictiones }}</b> registros
@@ -87,6 +87,6 @@
           </button>
         </li>
       </ul>
-    </div>
+    </footer>
   </section>
-</main>
+</body>
