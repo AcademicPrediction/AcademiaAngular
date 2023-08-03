@@ -45,9 +45,6 @@
   font-size: 13px;
 }
 
-/* Estilo para el botón "Limpiar" del filtro de búsqueda */
 .search-btn {
   background-color: #f44336;
-  color: white;
-  border-color: #f44336;
 }
