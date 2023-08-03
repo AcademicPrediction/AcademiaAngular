@@ -23,15 +23,36 @@ export class LoginComponent {
   onLogin() {
     if (!this.email || !this.password) {
       alert('Los campos de correo y contraseña son obligatorios.');
+      //cambiar y mostrar un componente de error
       return;
     }
 
-    //create login dto object
     const loginDto: LoginDto = {
       email: this.email,
       password: this.password,
-      role: 'Supervisor',
     };
+
+    this.loginService
+      .loginSupervisor(loginDto)
+      .subscribe((supervisor: Supervisor) => {
+        this.router.navigate(['/homepage']);
+      }),
+      (error: any) => {
+        if (error.status === 404) {
+          this.loginService.loginAdmin(loginDto).subscribe((admin: Admin) => {
+            this.router.navigate(['/homepage-admin']);
+          }),
+            (error: any) => {
+              if (error.status === 404) {
+                alert('Usuario no encontrado.');
+              } else {
+                alert('Error al iniciar sesión.');
+              }
+            };
+        } else {
+          alert('Error al iniciar sesión.');
+        }
+      };
   }
 
   togglePasswordVisibility() {

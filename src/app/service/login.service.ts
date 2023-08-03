@@ -11,13 +11,17 @@ import { LoginDto } from '../model/login-dto';
 })
 export class LoginService {
   private apiUrl =
-    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/'; // URL de tu servidor local
+    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/';
+  adminUrl = this.apiUrl + 'admins/login';
+  supervisorUrl = this.apiUrl + 'supervisors/login';
 
   constructor(private http: HttpClient) {}
 
-  authenticate(loginDto: LoginDto): Observable<Supervisor | Admin> {
-    const loginUrl =
-      loginDto.role === 'Supervisor' ? 'supervisors/login' : 'admin/login';
-    return this.http.post<Supervisor>(this.apiUrl + loginUrl, loginDto);
+  loginAdmin(loginDto: LoginDto): Observable<Admin> {
+    return this.http.post<Admin>(this.adminUrl, loginDto);
+  }
+
+  loginSupervisor(loginDto: LoginDto): Observable<Supervisor> {
+    return this.http.post<Supervisor>(this.supervisorUrl, loginDto);
   }
 }
