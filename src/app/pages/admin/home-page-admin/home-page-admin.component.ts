@@ -25,9 +25,9 @@ export class HomePageAdminComponent implements OnInit {
     name: '',
     lastName: '',
     email: '',
-    password: '',
-    dni: null, // Inicializar con null en lugar de 0
-    phoneNumber: null, // Inicializar con null en lugar de 0
+    dni: null,
+    phoneNumber: null,
+    password: ''
   };
 
   constructor(
@@ -155,44 +155,41 @@ export class HomePageAdminComponent implements OnInit {
         name: '',
         lastName: '',
         email: '',
-        password: '',
         dni: null,
         phoneNumber: null,
+        password: ''    
       };
       this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
       this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
     });
   }
 
-  isNewSupervisorValid(): boolean {
+  isNewSupervisorValid(): boolean { 
     const validNombre = this.newSupervisor.name.trim() !== '';
     const validApellido = this.newSupervisor.lastName.trim() !== '';
     const validCorreoElectronico = this.newSupervisor.email.trim() !== '';
-
+  
     // Verificar que el DNI sea numérico, no sea null, no sea 0 y tenga 8 dígitos
     const validDNI =
       this.newSupervisor.dni !== null && // Verificar que no sea null
       !isNaN(Number(this.newSupervisor.dni)) &&
       this.newSupervisor.dni.toString().length === 8 &&
-      !this.supervisores.some(
-        (supervisor) => supervisor.dni === this.newSupervisor.dni,
-      );
-
+      !this.supervisores.some((supervisor) => supervisor.dni === this.newSupervisor.dni);
+  
     // Verificar que el número telefónico sea numérico, no sea null, no sea 0 y tenga 9 dígitos
     const validNumeroTelefonico =
       this.newSupervisor.phoneNumber !== null && // Verificar que no sea null
-      !isNaN(Number(this.newSupervisor.email)) &&
+      !isNaN(Number(this.newSupervisor.phoneNumber)) &&
       this.newSupervisor.phoneNumber.toString().length === 9 &&
       !this.supervisores.some(
-        (supervisor) =>
-          supervisor.phoneNumber === this.newSupervisor.phoneNumber,
+        (supervisor) => supervisor.phoneNumber === this.newSupervisor.phoneNumber,
       );
-
+  
     // Verificar que el correo electrónico no esté registrado
     const validCorreoElectronicoUnico = !this.supervisores.some(
       (supervisor) => supervisor.email === this.newSupervisor.email,
     );
-
+    
     return (
       validNombre &&
       validApellido &&

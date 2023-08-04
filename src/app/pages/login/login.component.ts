@@ -23,7 +23,6 @@ export class LoginComponent {
   onLogin() {
     if (!this.email || !this.password) {
       alert('Los campos de correo y contraseña son obligatorios.');
-      //cambiar y mostrar un componente de error
       return;
     }
 
@@ -32,27 +31,21 @@ export class LoginComponent {
       password: this.password,
     };
 
-    this.loginService
-      .loginSupervisor(loginDto)
-      .subscribe((supervisor: Supervisor) => {
+    this.loginService.loginSupervisor(loginDto).subscribe(
+      (supervisor: Supervisor) => {
         this.router.navigate(['/homepage']);
-      }),
-      (error: any) => {
-        if (error.status === 404) {
-          this.loginService.loginAdmin(loginDto).subscribe((admin: Admin) => {
+      },
+      (supervisorError: any) => {
+        this.loginService.loginAdmin(loginDto).subscribe(
+          (admin: Admin) => {
             this.router.navigate(['/homepage-admin']);
-          }),
-            (error: any) => {
-              if (error.status === 404) {
-                alert('Usuario no encontrado.');
-              } else {
-                alert('Error al iniciar sesión.');
-              }
-            };
-        } else {
-          alert('Error al iniciar sesión.');
-        }
-      };
+          },
+          (adminError: any) => {
+            alert('Usuario no encontrado.'); // Si falla el inicio de sesión con ambos usuarios
+          }
+        );
+      }
+    );
   }
 
   togglePasswordVisibility() {
