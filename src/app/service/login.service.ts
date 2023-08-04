@@ -12,7 +12,7 @@ import { LoginDto } from '../model/login-dto';
 export class LoginService {
   private apiUrl =
     'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/';
-  adminUrl = this.apiUrl + 'admins/login';
+  adminUrl = this.apiUrl + 'administrator/login';
   supervisorUrl = this.apiUrl + 'supervisors/login';
 
   constructor(private http: HttpClient) {}
