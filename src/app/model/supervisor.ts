@@ -4,7 +4,7 @@ export interface Supervisor {
   name: string;
   lastName: string;
   email: string;
-  password: string;
-  dni: string | null;
-  phoneNumber: string | null;
+  dni: number | null;
+  phoneNumber: number | null;
+  password: string
 }

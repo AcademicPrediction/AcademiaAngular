@@ -33,7 +33,6 @@ export class LoginComponent {
   onLogin() {
     if (!this.email || !this.password) {
       alert('Los campos de correo y contraseña son obligatorios.');
-      //cambiar y mostrar un componente de error
       return;
     }
 
