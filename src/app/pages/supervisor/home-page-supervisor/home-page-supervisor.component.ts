@@ -4,7 +4,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-home-page-supervisor',
   templateUrl: './home-page-supervisor.component.html',
-  styleUrls: ['./home-page-supervisor.component.css']
+  styleUrls: ['./home-page-supervisor.component.css'],
 })
 export class HomePageSupervisorComponent {
   //inicializa un valor booleano en true
@@ -26,5 +26,11 @@ export class HomePageSupervisorComponent {
     const data = event.dataTransfer?.getData('text');
     // Aquí puedes realizar cualquier acción con los datos, por ejemplo:
     console.log('Elemento arrastrado:', data);
+  }
+
+  //logOut
+  logOut() {
+    localStorage.clear();
+    window.location.reload();
   }
 }
