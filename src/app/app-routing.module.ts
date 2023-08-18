@@ -5,14 +5,27 @@ import { HomePageAdminComponent } from './pages/admin/home-page-admin/home-page-
 import { HomePageSupervisorComponent } from './pages/supervisor/home-page-supervisor/home-page-supervisor.component';
 import { PredictionPageComponent } from './pages/supervisor/prediction-page/prediction-page.component';
 import { PredictionHistoryComponent } from './pages/supervisor/prediction-history/prediction-history.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirecciona a /login al cargar la app
-  { path: 'homepage-admin', component: HomePageAdminComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'homepage', component: HomePageSupervisorComponent },
-  { path: 'prediction', component: PredictionPageComponent },
-  { path: 'history-prediction', component: PredictionHistoryComponent },
+  {
+    path: 'homepage-admin',
+    component: HomePageAdminComponent,
+  },
+  {
+    path: 'homepage',
+    component: HomePageSupervisorComponent,
+  },
+  {
+    path: 'prediction',
+    component: PredictionPageComponent,
+  },
+  {
+    path: 'history-prediction',
+    component: PredictionHistoryComponent,
+  },
 ];
 
 @NgModule({

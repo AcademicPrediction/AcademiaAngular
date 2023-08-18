@@ -20,6 +20,16 @@ export class LoginComponent {
     private router: Router,
   ) {}
 
+  ngOnInit(): void {
+    if (localStorage.getItem('role') !== null) {
+      if (localStorage.getItem('role') === 'supervisor') {
+        this.router.navigate(['/homepage']);
+      } else {
+        this.router.navigate(['/homepage-admin']);
+      }
+    }
+  }
+
   onLogin() {
     if (!this.email || !this.password) {
       alert('Los campos de correo y contraseña son obligatorios.');
@@ -33,18 +43,29 @@ export class LoginComponent {
 
     this.loginService.loginSupervisor(loginDto).subscribe(
       (supervisor: Supervisor) => {
+        localStorage.setItem('supervisor', JSON.stringify(supervisor));
+        localStorage.setItem('role', 'supervisor');
         this.router.navigate(['/homepage']);
       },
-      (supervisorError: any) => {
+      (error: any) => {
         this.loginService.loginAdmin(loginDto).subscribe(
           (admin: Admin) => {
+            localStorage.setItem('admin', JSON.stringify(admin));
+            localStorage.setItem('role', 'admin');
             this.router.navigate(['/homepage-admin']);
           },
-          (adminError: any) => {
-            alert('Usuario no encontrado.'); // Si falla el inicio de sesión con ambos usuarios
-          }
+          (error: any) => {
+            if (error.status === 404) {
+              alert('Usuario no encontrado.');
+            } else {
+              alert('Error al iniciar sesión.');
+            }
+          },
         );
-      }
+        if (error.status === 404) {
+          alert('Usuario no encontrado.');
+        }
+      },
     );
   }
 
