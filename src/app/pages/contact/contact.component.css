@@ -1,0 +1,68 @@
+/* Tus estilos aquí */
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+
+body, html {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  text-align:center;
+  font-size: 28px;
+  font-family: 'Lobster', cursive;
+  margin-bottom: 20px; /* Espacio adicional debajo del título */
+}
+
+.col-centered {
+  float: none;
+  margin: 0 auto;
+  padding-top:5px;
+}
+
+.panel {
+  -webkit-box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;  /* Espacio extra alrededor de los inputs y los íconos */
+}
+
+.panel-default > .panel-heading {
+  color: #000 !important;
+  background: #3E86F5;
+}
+
+.input-group-addon {
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;  /* Espacio extra alrededor de los íconos */
+}
+
+.custom-btn-send {
+  background-color: #3E86F5;
+  border: 1px solid #3E86F5;
+  color: white;
+}
+
+.custom-btn-reset {
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* demás estilos aquí */
+
+/* Puedes añadir estos estilos si quieres resaltar los errores */
+.has-error .form-control {
+    border-color: #a94442;
+  }
+  
+  .text-danger {
+    color: red;
+  }
