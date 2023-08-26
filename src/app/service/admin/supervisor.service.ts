@@ -17,7 +17,8 @@ export class SupervisorService {
   }
 
   create(supervisor: Supervisor): Observable<Supervisor> {
-    return this.http.post<Supervisor>(this.apiUrl, supervisor);
+    const createUrl = `${this.apiUrl}/create`; // Agregamos '/create' a la URL
+    return this.http.post<Supervisor>(createUrl, supervisor);
   }
 
   update(supervisor: Supervisor, id: Number): Observable<Supervisor> {
