@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,15 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'Academai';
   constructor(private route: Router) {
-    this.validateSession();
+    this.route.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.validateSession(event.url);
+      }
+    });
   }
 
-  validateSession() {
-    if (localStorage.getItem('role') === null) {
+  validateSession(url: string) {
+    if (localStorage.getItem('role') === null && url !== '/contact') {
       this.route.navigate(['/login']);
     }
   }
