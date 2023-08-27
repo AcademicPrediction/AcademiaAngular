@@ -29,6 +29,7 @@ export class HomePageAdminComponent implements OnInit {
     phoneNumber: null,
     password: ''
   };
+  showPassword: boolean = false;
 
   constructor(
     private supervisorService: SupervisorService,
@@ -78,6 +79,10 @@ export class HomePageAdminComponent implements OnInit {
       { length: endPage - startPage + 1 },
       (_, i) => startPage + i,
     );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   getPaginatedSupervisores(): Supervisor[] {
@@ -209,39 +214,35 @@ export class HomePageAdminComponent implements OnInit {
     );
   }
 
-  isNewSupervisorValid(): boolean { 
+  isNewSupervisorValid(): boolean {
     const validNombre = this.newSupervisor.name.trim() !== '';
     const validApellido = this.newSupervisor.lastName.trim() !== '';
-    const validCorreoElectronico = this.newSupervisor.email.trim() !== '';
-  
-    // Verificar que el DNI sea numérico, no sea null, no sea 0 y tenga 8 dígitos
-    const validDNI =
-      this.newSupervisor.dni !== null && // Verificar que no sea null
-      !isNaN(Number(this.newSupervisor.dni)) &&
-      this.newSupervisor.dni.toString().length === 8 &&
-      !this.supervisores.some((supervisor) => supervisor.dni === this.newSupervisor.dni);
-  
-    // Verificar que el número telefónico sea numérico, no sea null, no sea 0 y tenga 9 dígitos
-    const validNumeroTelefonico =
-      this.newSupervisor.phoneNumber !== null && // Verificar que no sea null
-      !isNaN(Number(this.newSupervisor.phoneNumber)) &&
-      this.newSupervisor.phoneNumber.toString().length === 9 &&
-      !this.supervisores.some(
-        (supervisor) => supervisor.phoneNumber === this.newSupervisor.phoneNumber,
-      );
-  
-    // Verificar que el correo electrónico no esté registrado
-    const validCorreoElectronicoUnico = !this.supervisores.some(
-      (supervisor) => supervisor.email === this.newSupervisor.email,
-    );
+    const validCorreoElectronico = this.isEmailValid();
+    const validDNI = this.isDNIValid();
+    const validNumeroTelefonico = this.isPhoneNumberValid();
     
     return (
       validNombre &&
       validApellido &&
       validCorreoElectronico &&
       validDNI &&
-      validNumeroTelefonico &&
-      validCorreoElectronicoUnico
+      validNumeroTelefonico
+    );
+  }
+  
+  isDNIValid(): boolean {
+    return (
+      this.newSupervisor.dni !== null &&
+      !isNaN(Number(this.newSupervisor.dni)) &&
+      this.newSupervisor.dni.toString().length === 8
+    );
+  }
+  
+  isPhoneNumberValid(): boolean {
+    return (
+      this.newSupervisor.phoneNumber !== null &&
+      !isNaN(Number(this.newSupervisor.phoneNumber)) &&
+      this.newSupervisor.phoneNumber.toString().length === 9
     );
   }
 

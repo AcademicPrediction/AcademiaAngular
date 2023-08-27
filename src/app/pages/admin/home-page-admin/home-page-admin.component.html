@@ -173,114 +173,155 @@
   </div>
 </div>
 
-      <!-- Add Modal HTML -->
-      <div
-        id="addSupervisorModal"
-        class="modal fade"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="addSupervisorModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Agregar Supervisor</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
-                &times;
-              </button>
+<!-- Add Modal HTML -->
+<div
+  id="addSupervisorModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addSupervisorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Supervisor</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="addNombre">
+            <i class="fas fa-user"></i> Nombre
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="addNombre"
+            [(ngModel)]="newSupervisor.name"
+            name="addNombre"
+            required
+          />
+          <div class="validation-message" [class.text-success]="isNameValid()" [class.text-danger]="!isNameValid()">
+            {{ isNameValid() ? 'Dato válido' : 'Campo requerido' }}
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="addApellido">
+            <i class="fas fa-user"></i> Apellido
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="addApellido"
+            [(ngModel)]="newSupervisor.lastName"
+            name="addApellido"
+            required
+          />
+          <div class="validation-message" [class.text-success]="isLastNameValid()" [class.text-danger]="!isLastNameValid()">
+            {{ isLastNameValid() ? 'Dato válido' : 'Campo requerido' }}
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="addCorreoElectronico">
+            <i class="fas fa-envelope"></i> Correo Electrónico
+          </label>
+          <input
+            type="email"
+            class="form-control"
+            id="addCorreoElectronico"
+            [(ngModel)]="newSupervisor.email"
+            name="addCorreoElectronico"
+            required
+          />
+          <div class="validation-message" [class.text-success]="isEmailValid()" [class.text-danger]="!isEmailValid()">
+            {{ isEmailValid() ? 'Dato válido' : 'Campo requerido' }}
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="addContrasena">
+            <i class="fas fa-lock"></i> Contraseña
+          </label>
+          <div class="input-group">
+            <input
+              type="{{ showPassword ? 'text' : 'password' }}"
+              class="form-control"
+              id="addContrasena"
+              [(ngModel)]="newSupervisor.password"
+              name="addContrasena"
+              required
+            />
+            <div class="input-group-append">
+              <span class="input-group-text password-icon" (click)="togglePasswordVisibility()">
+                <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              </span>
             </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="addNombre">Nombre</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="addNombre"
-                  [(ngModel)]="newSupervisor.name"
-                  name="addNombre"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="addApellido">Apellido</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="addApellido"
-                  [(ngModel)]="newSupervisor.lastName"
-                  name="addApellido"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="addCorreoElectronico">Correo Electrónico</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="addCorreoElectronico"
-                  [(ngModel)]="newSupervisor.email"
-                  name="addCorreoElectronico"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="addContrasena">Contraseña</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="addContrasena"
-                  [(ngModel)]="newSupervisor.password"
-                  name="addContrasena"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="addDNI">DNI</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="addDNI"
-                  [(ngModel)]="newSupervisor.dni"
-                  name="addDNI"
-                  required
-                  (input)="limitInputLength($event, 8)"
-                />
-              </div>
-              <div class="form-group">
-                <label for="addNumeroTelefonico">Número Telefónico</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="addNumeroTelefonico"
-                  [(ngModel)]="newSupervisor.phoneNumber"
-                  name="addNumeroTelefonico"
-                  required
-                  (input)="limitInputLength($event, 9)"
-                />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">
-                Cancelar
-              </button>
-              <button
-                class="btn btn-success"
-                [disabled]="!areFieldsValid()"
-                (click)="agregarSupervisor()"
-                data-dismiss="modal"
-              >
-                Agregar
-              </button>
-            </div>
+          </div>
+          <div class="validation-message" [class.text-success]="isPasswordValid()" [class.text-danger]="!isPasswordValid()">
+            {{ isPasswordValid() ? 'Dato válido' : 'Campo requerido' }}
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="addDNI">
+            <i class="fas fa-id-card"></i> DNI
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            id="addDNI"
+            [(ngModel)]="newSupervisor.dni"
+            name="addDNI"
+            required
+          />
+          <div class="validation-message" [class.text-success]="isDNIValid()" [class.text-danger]="!isDNIValid()">
+            {{ isDNIValid() ? 'Dato válido' : 'DNI inválido' }}
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="addNumeroTelefonico">
+            <i class="fas fa-phone"></i> Número Telefónico
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            id="addNumeroTelefonico"
+            [(ngModel)]="newSupervisor.phoneNumber"
+            name="addNumeroTelefonico"
+            required
+          />
+          <div class="validation-message" [class.text-success]="isPhoneNumberValid()" [class.text-danger]="!isPhoneNumberValid()">
+            {{ isPhoneNumberValid() ? 'Dato válido' : 'Número telefónico inválido' }}
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          class="btn btn-success"
+          [disabled]="!isNewSupervisorValid()"
+          (click)="agregarSupervisor()"
+          data-dismiss="modal"
+        >
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Edit Modal HTML -->
 <div
@@ -307,7 +348,9 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="editNombre">Nombre</label>
+            <label for="editNombre">
+              <i class="fas fa-user"></i> Nombre
+            </label>
             <input
               type="text"
               class="form-control"
@@ -318,7 +361,9 @@
             />
           </div>
           <div class="form-group">
-            <label for="editApellido">Apellido</label>
+            <label for="editApellido">
+              <i class="fas fa-user"></i> Apellido
+            </label>
             <input
               type="text"
               class="form-control"
@@ -329,7 +374,9 @@
             />
           </div>
           <div class="form-group">
-            <label for="editCorreoElectronico">Correo Electrónico</label>
+            <label for="editCorreoElectronico">
+              <i class="fas fa-envelope"></i> Correo Electrónico
+            </label>
             <input
               type="email"
               class="form-control"
@@ -340,18 +387,29 @@
             />
           </div>
           <div class="form-group">
-            <label for="editContrasena">Contraseña</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editContrasena"
-              [(ngModel)]="selectedSupervisor.password"
-              name="editContrasena"
-              required
-            />
+            <label for="editContrasena">
+              <i class="fas fa-lock"></i> Contraseña
+            </label>
+            <div class="input-group">
+              <input
+                type="{{ showPassword ? 'text' : 'password' }}"
+                class="form-control"
+                id="editContrasena"
+                [(ngModel)]="selectedSupervisor.password"
+                name="editContrasena"
+                required
+              />
+              <div class="input-group-append">
+                <span class="input-group-text password-icon" (click)="togglePasswordVisibility()">
+                  <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </span>
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <label for="editDNI">DNI</label>
+            <label for="editDNI">
+              <i class="fas fa-id-card"></i> DNI
+            </label>
             <input
               type="text"
               class="form-control"
@@ -362,7 +420,9 @@
             />
           </div>
           <div class="form-group">
-            <label for="editNumeroTelefonico">Número Telefónico</label>
+            <label for="editNumeroTelefonico">
+              <i class="fas fa-phone"></i> Número Telefónico
+            </label>
             <input
               type="text"
               class="form-control"
@@ -389,6 +449,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 <!-- Delete Modal HTML -->
 <div

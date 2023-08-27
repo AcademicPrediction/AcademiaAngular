@@ -352,3 +352,11 @@ table.table {
   .clear-button i {
 	margin-right: 1px;
   }
+
+  .validation-message {
+	color: black; /* Mensajes de error en color negro */
+  }
+  
+  .text-danger {
+	color: red; /* Mensajes de error en color rojo */
+  }
