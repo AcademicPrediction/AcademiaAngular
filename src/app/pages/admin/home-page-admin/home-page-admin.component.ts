@@ -25,10 +25,11 @@ export class HomePageAdminComponent implements OnInit {
     name: '',
     lastName: '',
     email: '',
-    dni: null,
-    phoneNumber: null,
+    dni: null, // Inicializa con un valor numérico predeterminado
+    phoneNumber: null, // Inicializa con un valor numérico predeterminado
     password: ''
   };
+  
 
   constructor(
     private supervisorService: SupervisorService,
@@ -143,25 +144,73 @@ export class HomePageAdminComponent implements OnInit {
     this.applyFilter(); // Aplicar el filtro nuevamente para mostrar todos los supervisores
   }
 
+  isNameValid(): boolean {
+    return this.newSupervisor.name.trim() !== '';
+  }
+
+  isLastNameValid(): boolean {
+    return this.newSupervisor.lastName.trim() !== '';
+  }
+
+  isEmailValid(): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(this.newSupervisor.email);
+  }
+
+  isDniValid(): boolean {
+    const dniValue = this.newSupervisor.dni;
+    return typeof dniValue === 'number' && dniValue >= 10000000 && dniValue <= 99999999;
+  }
+
+  isPhoneNumberValid(): boolean {
+    const phoneNumberValue = this.newSupervisor.phoneNumber;
+    return typeof phoneNumberValue === 'number' && phoneNumberValue >= 100000000 && phoneNumberValue <= 999999999;
+  }
+
+  isPasswordValid(): boolean {
+    return this.newSupervisor.password.trim() !== '';
+  }
+
+  areFieldsValid(): boolean {
+    return (
+      this.isNameValid() &&
+      this.isLastNameValid() &&
+      this.isEmailValid() &&
+      this.isDniValid() &&
+      this.isPhoneNumberValid()
+    );
+  }
+
   agregarSupervisorModal(content: any): void {
-    this.modalService.open(content, { centered: true }); // Abrir el modal para agregar supervisor
+    this.modalService.open(content, { centered: true });
   }
 
   agregarSupervisor(): void {
-    this.supervisorService.create(this.newSupervisor).subscribe(() => {
-      console.log('Agregar supervisor:', this.newSupervisor);
-      this.newSupervisor = {
-        id: 0,
-        name: '',
-        lastName: '',
-        email: '',
-        dni: null,
-        phoneNumber: null,
-        password: ''    
-      };
-      this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
-      this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
-    });
+    if (!this.areFieldsValid()) {
+      console.log('Algunos campos no son válidos');
+      return;
+    }
+
+    this.supervisorService.create(this.newSupervisor).subscribe(
+      () => {
+        console.log('Agregar supervisor:', this.newSupervisor);
+        this.newSupervisor = {
+          id: 0,
+          name: '',
+          lastName: '',
+          email: '',
+          dni: null,
+          phoneNumber: null,
+          password: ''
+        };
+        this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
+        this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
+      },
+      (error) => {
+        console.error('Error al agregar supervisor:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario
+      }
+    );
   }
 
   isNewSupervisorValid(): boolean { 
@@ -198,6 +247,14 @@ export class HomePageAdminComponent implements OnInit {
       validNumeroTelefonico &&
       validCorreoElectronicoUnico
     );
+  }
+
+    // En tu archivo de componente .ts
+  limitInputLength(event: any, maxLength: number) {
+    const value = event.target.value.toString();
+    if (value.length > maxLength) {
+      event.target.value = parseInt(value.slice(0, maxLength), 10);
+    }
   }
 
   deleteSupervisor(): void {
