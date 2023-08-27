@@ -147,21 +147,66 @@ export class HomePageAdminComponent implements OnInit {
     this.modalService.open(content, { centered: true }); // Abrir el modal para agregar supervisor
   }
 
+
+  isNameValid(): boolean {
+    return this.newSupervisor.name.trim() !== '';
+  }
+
+  isLastNameValid(): boolean {
+    return this.newSupervisor.lastName.trim() !== '';
+  }
+
+  isEmailValid(): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(this.newSupervisor.email);
+  }
+
+  isPasswordValid(): boolean {
+    return this.newSupervisor.password.trim() !== '';
+  }
+
+  areFieldsValid(): boolean {
+    return (
+      this.isNameValid() &&
+      this.isLastNameValid() &&
+      this.isEmailValid() &&
+      this.isPasswordValid()
+    );
+  }
+
+  limitInputLength(event: any, maxLength: number) {
+    const value = event.target.value.toString();
+    if (value.length > maxLength) {
+      event.target.value = parseInt(value.slice(0, maxLength), 10);
+    }
+  }
+
   agregarSupervisor(): void {
-    this.supervisorService.create(this.newSupervisor).subscribe(() => {
-      console.log('Agregar supervisor:', this.newSupervisor);
-      this.newSupervisor = {
-        id: 0,
-        name: '',
-        lastName: '',
-        email: '',
-        dni: null,
-        phoneNumber: null,
-        password: ''    
-      };
-      this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
-      this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
-    });
+    if (!this.areFieldsValid()) {
+      console.log('Algunos campos no son válidos');
+      return;
+    }
+
+    this.supervisorService.create(this.newSupervisor).subscribe(
+      () => {
+        console.log('Agregar supervisor:', this.newSupervisor);
+        this.newSupervisor = {
+          id: 0,
+          name: '',
+          lastName: '',
+          email: '',
+          dni: null,
+          phoneNumber: null,
+          password: '',
+        };
+        this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
+        this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
+      },
+      (error) => {
+        console.error('Error al agregar supervisor:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario
+      }
+    );
   }
 
   isNewSupervisorValid(): boolean { 
