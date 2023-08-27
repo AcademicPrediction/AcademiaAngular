@@ -25,11 +25,10 @@ export class HomePageAdminComponent implements OnInit {
     name: '',
     lastName: '',
     email: '',
-    dni: null, // Inicializa con un valor numérico predeterminado
-    phoneNumber: null, // Inicializa con un valor numérico predeterminado
+    dni: null,
+    phoneNumber: null,
     password: ''
   };
-  
 
   constructor(
     private supervisorService: SupervisorService,
@@ -144,6 +143,11 @@ export class HomePageAdminComponent implements OnInit {
     this.applyFilter(); // Aplicar el filtro nuevamente para mostrar todos los supervisores
   }
 
+  agregarSupervisorModal(content: any): void {
+    this.modalService.open(content, { centered: true }); // Abrir el modal para agregar supervisor
+  }
+
+
   isNameValid(): boolean {
     return this.newSupervisor.name.trim() !== '';
   }
@@ -153,18 +157,8 @@ export class HomePageAdminComponent implements OnInit {
   }
 
   isEmailValid(): boolean {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(this.newSupervisor.email);
-  }
-
-  isDniValid(): boolean {
-    const dniValue = this.newSupervisor.dni;
-    return typeof dniValue === 'number' && dniValue >= 10000000 && dniValue <= 99999999;
-  }
-
-  isPhoneNumberValid(): boolean {
-    const phoneNumberValue = this.newSupervisor.phoneNumber;
-    return typeof phoneNumberValue === 'number' && phoneNumberValue >= 100000000 && phoneNumberValue <= 999999999;
   }
 
   isPasswordValid(): boolean {
@@ -176,13 +170,15 @@ export class HomePageAdminComponent implements OnInit {
       this.isNameValid() &&
       this.isLastNameValid() &&
       this.isEmailValid() &&
-      this.isDniValid() &&
-      this.isPhoneNumberValid()
+      this.isPasswordValid()
     );
   }
 
-  agregarSupervisorModal(content: any): void {
-    this.modalService.open(content, { centered: true });
+  limitInputLength(event: any, maxLength: number) {
+    const value = event.target.value.toString();
+    if (value.length > maxLength) {
+      event.target.value = parseInt(value.slice(0, maxLength), 10);
+    }
   }
 
   agregarSupervisor(): void {
@@ -201,7 +197,7 @@ export class HomePageAdminComponent implements OnInit {
           email: '',
           dni: null,
           phoneNumber: null,
-          password: ''
+          password: '',
         };
         this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
         this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
@@ -247,14 +243,6 @@ export class HomePageAdminComponent implements OnInit {
       validNumeroTelefonico &&
       validCorreoElectronicoUnico
     );
-  }
-
-    // En tu archivo de componente .ts
-  limitInputLength(event: any, maxLength: number) {
-    const value = event.target.value.toString();
-    if (value.length > maxLength) {
-      event.target.value = parseInt(value.slice(0, maxLength), 10);
-    }
   }
 
   deleteSupervisor(): void {

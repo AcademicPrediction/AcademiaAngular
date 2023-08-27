@@ -173,123 +173,114 @@
   </div>
 </div>
 
-<!-- Add Modal HTML -->
-<div
-id="addSupervisorModal"
-class="modal fade"
-tabindex="-1"
-role="dialog"
-aria-labelledby="addSupervisorModalLabel"
-aria-hidden="true"
->
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Agregar Supervisor</h4>
-      <button
-        type="button"
-        class="close"
-        data-dismiss="modal"
+      <!-- Add Modal HTML -->
+      <div
+        id="addSupervisorModal"
+        class="modal fade"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addSupervisorModalLabel"
         aria-hidden="true"
       >
-        &times;
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label for="addNombre">Nombre</label>
-        <input
-          type="text"
-          class="form-control"
-          id="addNombre"
-          [(ngModel)]="newSupervisor.name"
-          name="addNombre"
-          required
-        />
-        <div class="error-message" *ngIf="!isNameValid()">Nombre es obligatorio.</div>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar Supervisor</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="addNombre">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addNombre"
+                  [(ngModel)]="newSupervisor.name"
+                  name="addNombre"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="addApellido">Apellido</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addApellido"
+                  [(ngModel)]="newSupervisor.lastName"
+                  name="addApellido"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="addCorreoElectronico">Correo Electrónico</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="addCorreoElectronico"
+                  [(ngModel)]="newSupervisor.email"
+                  name="addCorreoElectronico"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="addContrasena">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="addContrasena"
+                  [(ngModel)]="newSupervisor.password"
+                  name="addContrasena"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="addDNI">DNI</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="addDNI"
+                  [(ngModel)]="newSupervisor.dni"
+                  name="addDNI"
+                  required
+                  (input)="limitInputLength($event, 8)"
+                />
+              </div>
+              <div class="form-group">
+                <label for="addNumeroTelefonico">Número Telefónico</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="addNumeroTelefonico"
+                  [(ngModel)]="newSupervisor.phoneNumber"
+                  name="addNumeroTelefonico"
+                  required
+                  (input)="limitInputLength($event, 9)"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Cancelar
+              </button>
+              <button
+                class="btn btn-success"
+                [disabled]="!areFieldsValid()"
+                (click)="agregarSupervisor()"
+                data-dismiss="modal"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="addApellido">Apellido</label>
-        <input
-          type="text"
-          class="form-control"
-          id="addApellido"
-          [(ngModel)]="newSupervisor.lastName"
-          name="addApellido"
-          required
-        />
-        <div class="error-message" *ngIf="!isLastNameValid()">Apellido es obligatorio.</div>
-      </div>
-      <div class="form-group">
-        <label for="addCorreoElectronico">Correo Electrónico</label>
-        <input
-          type="email"
-          class="form-control"
-          id="addCorreoElectronico"
-          [(ngModel)]="newSupervisor.email"
-          name="addCorreoElectronico"
-          required
-        />
-        <div class="error-message" *ngIf="!isEmailValid()">Correo electrónico inválido.</div>
-      </div>
-      <div class="form-group">
-        <label for="addContrasena">Contraseña</label>
-        <input
-          type="password"
-          class="form-control"
-          id="addContrasena"
-          [(ngModel)]="newSupervisor.password"
-          name="addContrasena"
-          required
-        />
-        <div class="error-message" *ngIf="!isPasswordValid()">Contraseña es obligatoria.</div>
-      </div>
-      <div class="form-group">
-        <label for="addDNI">DNI</label>
-        <input
-          type="number"
-          class="form-control"
-          id="addDNI"
-          [(ngModel)]="newSupervisor.dni"
-          name="addDNI"
-          required
-          (input)="limitInputLength($event, 8)"
-        />
-        <div class="error-message" *ngIf="!isDniValid()">DNI debe tener exactamente 8 dígitos numéricos.</div>
-      </div>
-      <div class="form-group">
-        <label for="addNumeroTelefonico">Número Telefónico</label>
-        <input
-          type="number"
-          class="form-control"
-          id="addNumeroTelefonico"
-          [(ngModel)]="newSupervisor.phoneNumber"
-          name="addNumeroTelefonico"
-          required
-          (input)="limitInputLength($event, 9)"
-        />
-        <div class="error-message" *ngIf="!isPhoneNumberValid()">Número telefónico debe tener exactamente 9 dígitos numéricos.</div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">
-        Cancelar
-      </button>
-      <button
-        class="btn btn-success"
-        [disabled]="!areFieldsValid()"
-        (click)="agregarSupervisor()"
-        data-dismiss="modal"
-      >
-        Agregar
-      </button>
-    </div>
-  </div>
-</div>
-</div>
-
-
-
 
 <!-- Edit Modal HTML -->
 <div
