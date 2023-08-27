@@ -1,0 +1,19 @@
+version: 0.2
+
+#build for angular application
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16.x
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build
+
+artifact:
+  files:
+    - "**/*"
+  base-directory: "dist/academai"
