@@ -6,26 +6,28 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(to right, #ff6b6b, #3E86F5);
 }
 
 h1 {
-  text-align:center;
-  font-size: 28px;
+  text-align: center;
+  font-size: 36px;
   font-family: 'Lobster', cursive;
-  margin-bottom: 20px; /* Espacio adicional debajo del título */
+  margin-bottom: 30px;
+  color: white;
 }
 
 .col-centered {
   float: none;
   margin: 0 auto;
-  padding-top:5px;
+  padding-top: 5px;
 }
 
 .panel {
-  -webkit-box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  padding: 20px;  /* Espacio extra alrededor de los inputs y los íconos */
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .panel-default > .panel-heading {
@@ -37,32 +39,59 @@ h1 {
   background-color: lightgray;
   display: flex;
   align-items: center;
-  padding: 0 10px;  /* Espacio extra alrededor de los íconos */
+  padding: 0 10px;
+}
+
+.has-error .form-control {
+    border-color: #a94442;
+}
+
+.text-danger {
+  color: red;
 }
 
 .custom-btn-send {
   background-color: #3E86F5;
-  border: 1px solid #3E86F5;
+  border: none;
   color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn-send:hover {
+  background-color: #2b6ac1;
+}
+
+.custom-btn-cancel {
+  background-color: #ff6b6b;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn-cancel:hover {
+  background-color: #ff4f4f;
 }
 
 .custom-btn-reset {
-  background-color: white;
+  background-color: transparent;
   border: 1px solid lightgray;
+  color: lightgray;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.custom-btn-reset:hover {
+  color: #3E86F5;
 }
 
 .btn-container {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
-
 /* demás estilos aquí */
-
-/* Puedes añadir estos estilos si quieres resaltar los errores */
-.has-error .form-control {
-    border-color: #a94442;
-  }
-  
-  .text-danger {
-    color: red;
-  }
