@@ -28,6 +28,18 @@
           Cerrar sesión
         </a>
       </li>
-    </ul>
+      <li class="tw-mt-2"> <!-- Reducir el margen superior aquí -->
+        <div class="tw-flex tw-items-center">
+          <i class="fas fa-user"></i>
+          <!-- Icono de una persona -->
+          <div class="tw-ml-2">
+            <span class="tw-font-bold">{{ admin?.name }} {{ admin?.lastName }}</span>
+            <span class="tw-block">{{ admin?.email }}</span>
+          </div>
+        </div>
+      </li>
+      <li style="margin-top: 20px;"></li> <!-- Agrega un espacio debajo de este li -->
+    </ul>   
+    
   </nav>
 </div>

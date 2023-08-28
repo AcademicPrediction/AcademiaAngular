@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Admin } from 'src/app/model/admin';
 
 @Component({
   selector: 'app-nav-bar-admin',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
 })
 export class NavBarAdminComponent {
   sidebarActive = false;
+  admin: Admin | null = null;
+
+  ngOnInit(): void {
+    this.admin = JSON.parse(
+      localStorage.getItem('admin') || '{}',
+    ) as Admin;
+  }
+
 
   toggleSidebar(): void {
     this.sidebarActive = !this.sidebarActive;

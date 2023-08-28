@@ -40,7 +40,6 @@
         </a>
       </li>
     </ul>
-
     <ul>
       <li class="tw-font-semibold tw-py-10">
         <a (click)="logOut()">
@@ -49,6 +48,17 @@
           Cerrar sesión
         </a>
       </li>
+      <li class="tw-mt-2"> <!-- Reducir el margen superior aquí -->
+        <div class="tw-flex tw-items-center">
+          <i class="fas fa-user"></i>
+          <!-- Icono de una persona -->
+          <div class="tw-ml-2">
+            <span class="tw-font-bold">{{ supervisor?.name }} {{ supervisor?.lastName }}</span>
+            <span class="tw-block">{{ supervisor?.email }}</span>
+          </div>
+        </div>
+      </li>
+      <li style="margin-top: 20px;"></li> <!-- Agrega un espacio debajo de este li -->
     </ul>
   </nav>
 </div>
