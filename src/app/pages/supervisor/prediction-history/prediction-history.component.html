@@ -43,21 +43,26 @@
           <th>ID</th>
           <th>Nombre de Archivo</th>
           <th>Fecha</th>
-          <th>Descarga</th>
+          <th class="tw-text-center">Descarga</th>
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let prediction of getPaginatedPredictiones()">
+        <tr *ngFor="let prediction of getPaginatedPredictiones()">
           <td>{{ prediction.id }}</td>
-          <td>{{ prediction.fileName }}</td>
-          <td>{{ prediction.date }}</td>
-          <td></td>
-        </tr> -->
-        <tr>
-          <td>1</td>
-          <td>Excel.pdf</td>
-          <td>04/03/2023 6:20 pm</td>
-          <td>Icono</td>
+          <td>{{ prediction.name }}</td>
+          <td>{{ convertDate(prediction.date) }}</td>
+          <td class="tw-text-center">
+            <button
+              (click)="
+                downloadPredictionFile(
+                  prediction.id.toString(),
+                  prediction.name
+                )
+              "
+            >
+              <i class="fa fa-download"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

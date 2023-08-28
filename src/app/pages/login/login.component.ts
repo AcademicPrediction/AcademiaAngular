@@ -4,6 +4,7 @@ import { LoginService } from 'src/app/service/login.service';
 import { Supervisor } from 'src/app/model/supervisor';
 import { Admin } from 'src/app/model/admin';
 import { LoginDto } from 'src/app/model/login-dto';
+import { PredictionService } from 'src/app/service/prediction.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
   constructor(
     private loginService: LoginService,
     private router: Router,
+    private predictionService: PredictionService,
   ) {}
 
   ngOnInit(): void {

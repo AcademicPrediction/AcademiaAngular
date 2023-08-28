@@ -15,6 +15,7 @@ import { NavBarSupervisorComponent } from './components/nav-bar-supervisor/nav-b
 import { PredictionPageComponent } from './pages/supervisor/prediction-page/prediction-page.component';
 import { PredictionHistoryComponent } from './pages/supervisor/prediction-history/prediction-history.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { PredictionDialogComponent } from './components/prediction-dialog/prediction-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     PredictionPageComponent,
     PredictionHistoryComponent,
     ContactComponent,
+    PredictionDialogComponent,
   ],
   imports: [
     BrowserModule,

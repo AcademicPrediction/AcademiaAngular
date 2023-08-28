@@ -1,55 +1,91 @@
 <main class="tw-flex">
-    <aside>
-        <app-nav-bar-supervisor></app-nav-bar-supervisor>
-    </aside>
-    <section class="tw-w-screen tw-flex tw-flex-col tw-items-center tw-justify-center">
+  <aside>
+    <app-nav-bar-supervisor></app-nav-bar-supervisor>
+  </aside>
+  <section
+    class="tw-w-screen tw-flex tw-flex-col tw-items-center tw-justify-center"
+  >
+    <h1 class="tw-text-4xl tw-font-semibold title-color tw-pb-14" *ngIf="!file">
+      CARGAR ARCHIVO
+    </h1>
+    <h1 class="tw-text-4xl tw-font-semibold title-color tw-pb-14" *ngIf="file">
+      ARCHIVO CARGADO
+    </h1>
 
-        <h1 class="tw-text-4xl tw-font-semibold title-color tw-pb-14" *ngIf="!file">CARGAR ARCHIVO</h1>
-        <h1 class="tw-text-4xl tw-font-semibold title-color tw-pb-14" *ngIf="file">ARCHIVO CARGADO</h1>
+    <div
+      class="tw-w-[70%] tw-flex tw-flex-col tw-items-center tw-rounded-2xl box-shadow"
+    >
+      <h2 class="tw-py-3 tw-font-semibold tw-text-xl" *ngIf="!file">
+        Adjunta tu documento excel detallando información de los estudiantes
+      </h2>
 
-        <div class="tw-w-[70%] tw-flex tw-flex-col tw-items-center tw-rounded-2xl box-shadow">
+      <h2 class="tw-py-3 tw-font-semibold tw-text-xl" *ngIf="file">
+        Archivo cargado correctamente
+      </h2>
 
-            <h2 class="tw-py-3 tw-font-semibold tw-text-xl" *ngIf="!file">
-                Adjunta tu documento excel detallando información de los estudiantes
-            </h2>
+      <div class="dotted-line tw-w-full"></div>
 
-            <h2 class="tw-py-3 tw-font-semibold tw-text-xl" *ngIf="file">
-                Archivo cargado correctamente
-            </h2>
-
-            <div class="dotted-line tw-w-full"></div>
-
-            <div class="sm:tw-w-[300px] md:tw-w-[600px] tw-h-[300px] tw-bg-gray-300 tw-relative tw-rounded-[30px] tw-my-4">
-                <label class="tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-center tw-text-center tw-items-center tw-font-medium" *ngIf="!file">
-                    <img src="assets/upload.svg" alt="upload" class="tw-mx-auto tw-w-[60px] tw-h-[60px]">
-                    <span>Arrastra y suelta tu archivo aquí</span>
-                    <span>o</span>
-                    <label class="tw-cursor-pointer tw-text-white tw-border-[1px] 
-                    tw-rounded tw-w-fit tw-px-2 tw-py-2 tw-mt-2 tw-z-50 default-button">
-                        Subir archivo<input type="file" (change)="getFile($event)" class="tw-opacity-0 tw-w-0 tw-h-0">
-                    </label>
-                </label>
-                <input type="file" (click)="disableInputClick($event)" (change)="getFile($event)" class="tw-opacity-0 
-                tw-w-full tw-h-full tw-top-0 tw-start-0 tw-absolute tw-z-30">
-    
-                <div class="tw-flex tw-flex-col tw-items-center tw-justify-center 
-                tw-h-full" *ngIf="file">
-                    <img alt="excel-icon" src="assets/excel-icon.webp" class="tw-w-[65px] tw-h-[65px]">
-                    <p class="tw-text-center tw-pt-2">{{file.name}}</p>
-                </div>
-              </div>
+      <div
+        class="sm:tw-w-[300px] md:tw-w-[600px] tw-h-[300px] tw-bg-gray-300 tw-relative tw-rounded-[30px] tw-my-4 tw-flex tw-justify-center"
+      >
+        <div *ngIf="isLoading" class="loader tw-place-self-center"></div>
+        <label
+          class="tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-center tw-text-center tw-items-center tw-font-medium"
+          *ngIf="!file"
+        >
+          <img
+            src="assets/upload.svg"
+            alt="upload"
+            class="tw-mx-auto tw-w-[60px] tw-h-[60px]"
+          />
+          <span>Arrastra y suelta tu archivo aquí</span>
+          <span>o</span>
+          <label
+            class="tw-cursor-pointer tw-text-white tw-border-[1px] tw-rounded tw-w-fit tw-px-2 tw-py-2 tw-mt-2 tw-z-50 default-button"
+          >
+            Subir archivo<input
+              type="file"
+              (change)="getFile($event)"
+              class="tw-opacity-0 tw-w-0 tw-h-0"
+            />
+          </label>
+        </label>
+        <input
+          type="file"
+          (click)="disableInputClick($event)"
+          (change)="getFile($event)"
+          class="tw-opacity-0 tw-w-full tw-h-full tw-top-0 tw-start-0 tw-absolute tw-z-30"
+        />
+        <div
+          class="tw-flex tw-flex-col tw-justify-center tw-h-full"
+          *ngIf="file && !isLoading"
+        >
+          <img
+            alt="excel-icon"
+            src="assets/excel-icon.webp"
+            class="tw-w-[65px] tw-h-[65px]"
+          />
+          <p class="tw-text-center tw-pt-2">{{ file.name }}</p>
         </div>
+      </div>
+    </div>
 
-        <div class="tw-flex [&>button]:tw-text-white [&>button]:tw-border-[1px] [&>button]:tw-rounded
-            [&>button]:tw-px-20 [&>button]:tw-py-1 tw-pt-5" *ngIf="file" >
-            <button class="default-button tw-mr-10">
-                Continuar
-            </button>
-            <button class="default-button">
-                Cancelar
-            </button>
-        </div>
+    <div
+      class="tw-flex [&>button]:tw-text-white [&>button]:tw-border-[1px] [&>button]:tw-rounded [&>button]:tw-px-20 [&>button]:tw-py-1 tw-pt-5"
+      *ngIf="file"
+    >
+      <button class="default-button tw-mr-10" (click)="doPrediction()">
+        Continuar
+      </button>
+      <button class="default-button" (click)="cancelPrediction()">
+        Cancelar
+      </button>
+    </div>
 
-    </section>
-
+    <app-prediction-dialog
+      [showDialog]="showDialog"
+      (closeDialog)="closeDialog()"
+    >
+    </app-prediction-dialog>
+  </section>
 </main>

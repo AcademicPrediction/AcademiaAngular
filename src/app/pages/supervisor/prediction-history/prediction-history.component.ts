@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Prediction } from 'src/app/model/prediction';
+import { Supervisor } from 'src/app/model/supervisor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PredictionService } from 'src/app/service/prediction.service';
 
 @Component({
   selector: 'app-prediction-history',
@@ -20,29 +22,37 @@ export class PredictionHistoryComponent {
   filteredPredictiones: Prediction[] = [];
   newPrediction: Prediction = {
     id: 0,
-    fileName: '',
-    date: '',
+    name: '',
+    date: new Date(),
   };
+  supervisor: Supervisor | null = null;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    private predictionService: PredictionService,
+  ) {}
 
   ngOnInit(): void {
-    // this.consultarTodosPredictiones();
+    this.consultarTodosPredictiones();
   }
 
-  // consultarTodosPredictiones(): void {
-  //   this.predictionService.getAll().subscribe(
-  //     (predictiones: Prediction[]) => {
-  //       this.predictiones = predictiones;
-  //       this.totalPredictiones = this.predictiones.length;
-  //       this.calculateTotalPages();
-  //       this.applyFilter(); // Aplicar el filtro inicial
-  //     },
-  //     (error) => {
-  //       console.error('Error al obtener predictiones:', error);
-  //     },
-  //   );
-  // }
+  consultarTodosPredictiones(): void {
+    //getLocalstorage supervisor id
+    this.supervisor = JSON.parse(
+      localStorage.getItem('supervisor') || '{}',
+    ) as Supervisor;
+    this.predictionService.getAllPredictions(this.supervisor.id).subscribe(
+      (predictiones: Prediction[]) => {
+        this.predictiones = predictiones;
+        this.totalPredictiones = this.predictiones.length;
+        this.calculateTotalPages();
+        this.applyFilter();
+      },
+      (error) => {
+        console.error('Error al obtener predictiones:', error);
+      },
+    );
+  }
 
   calculateTotalPages(): void {
     this.totalPages = Math.ceil(this.totalPredictiones / this.itemsPerPage);
@@ -100,7 +110,8 @@ export class PredictionHistoryComponent {
     return this.predictiones.filter((prediction) => {
       // Combinar todos los campos y buscar en ellos
       const combinedFields =
-        prediction.fileName.toLowerCase() + prediction.date.toLowerCase();
+        prediction.name.toLowerCase() +
+        prediction.date.toString().toLowerCase();
 
       return combinedFields.includes(searchTextLower);
     });
@@ -129,5 +140,38 @@ export class PredictionHistoryComponent {
     this.isIconsEnabled = this.predictiones.some(
       (prediction) => prediction.isSelected,
     );
+  }
+
+  downloadPredictionFile(id: string, name: string): void {
+    this.predictionService.downloadPredictionFile({ id, name }).subscribe(
+      (response) => {
+        const filename =
+          response.headers.get('content-disposition')?.split('filename=')[1] ||
+          'default-filename.xlsx';
+        const blob = new Blob([response.body as Blob], {
+          type: 'application/octet-stream',
+        });
+        const url = window.URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al descargar el archivo:', error);
+      },
+    );
+  }
+
+  convertDate(date: Date): string {
+    const originalDate = new Date(date);
+    const year = originalDate.getFullYear();
+    const month = String(originalDate.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11, así que añadimos 1 para obtener el mes correcto
+    const day = String(originalDate.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 }
