@@ -29,6 +29,7 @@ export class HomePageAdminComponent implements OnInit {
     phoneNumber: null,
     password: ''
   };
+  showPassword: boolean = false;
 
   constructor(
     private supervisorService: SupervisorService,
@@ -78,6 +79,10 @@ export class HomePageAdminComponent implements OnInit {
       { length: endPage - startPage + 1 },
       (_, i) => startPage + i,
     );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   getPaginatedSupervisores(): Supervisor[] {
@@ -147,56 +152,97 @@ export class HomePageAdminComponent implements OnInit {
     this.modalService.open(content, { centered: true }); // Abrir el modal para agregar supervisor
   }
 
-  agregarSupervisor(): void {
-    this.supervisorService.create(this.newSupervisor).subscribe(() => {
-      console.log('Agregar supervisor:', this.newSupervisor);
-      this.newSupervisor = {
-        id: 0,
-        name: '',
-        lastName: '',
-        email: '',
-        dni: null,
-        phoneNumber: null,
-        password: ''    
-      };
-      this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
-      this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
-    });
+
+  isNameValid(): boolean {
+    return this.newSupervisor.name.trim() !== '';
   }
 
-  isNewSupervisorValid(): boolean { 
+  isLastNameValid(): boolean {
+    return this.newSupervisor.lastName.trim() !== '';
+  }
+
+  isEmailValid(): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(this.newSupervisor.email);
+  }
+
+  isPasswordValid(): boolean {
+    return this.newSupervisor.password.trim() !== '';
+  }
+
+  areFieldsValid(): boolean {
+    return (
+      this.isNameValid() &&
+      this.isLastNameValid() &&
+      this.isEmailValid() &&
+      this.isPasswordValid()
+    );
+  }
+
+  limitInputLength(event: any, maxLength: number) {
+    const value = event.target.value.toString();
+    if (value.length > maxLength) {
+      event.target.value = parseInt(value.slice(0, maxLength), 10);
+    }
+  }
+
+  agregarSupervisor(): void {
+    if (!this.areFieldsValid()) {
+      console.log('Algunos campos no son válidos');
+      return;
+    }
+
+    this.supervisorService.create(this.newSupervisor).subscribe(
+      () => {
+        console.log('Agregar supervisor:', this.newSupervisor);
+        this.newSupervisor = {
+          id: 0,
+          name: '',
+          lastName: '',
+          email: '',
+          dni: null,
+          phoneNumber: null,
+          password: '',
+        };
+        this.modalService.dismissAll(); // Cerrar el modal al agregar correctamente
+        this.consultarTodosSupervisores(); // Actualizar la tabla automáticamente
+      },
+      (error) => {
+        console.error('Error al agregar supervisor:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario
+      }
+    );
+  }
+
+  isNewSupervisorValid(): boolean {
     const validNombre = this.newSupervisor.name.trim() !== '';
     const validApellido = this.newSupervisor.lastName.trim() !== '';
-    const validCorreoElectronico = this.newSupervisor.email.trim() !== '';
-  
-    // Verificar que el DNI sea numérico, no sea null, no sea 0 y tenga 8 dígitos
-    const validDNI =
-      this.newSupervisor.dni !== null && // Verificar que no sea null
-      !isNaN(Number(this.newSupervisor.dni)) &&
-      this.newSupervisor.dni.toString().length === 8 &&
-      !this.supervisores.some((supervisor) => supervisor.dni === this.newSupervisor.dni);
-  
-    // Verificar que el número telefónico sea numérico, no sea null, no sea 0 y tenga 9 dígitos
-    const validNumeroTelefonico =
-      this.newSupervisor.phoneNumber !== null && // Verificar que no sea null
-      !isNaN(Number(this.newSupervisor.phoneNumber)) &&
-      this.newSupervisor.phoneNumber.toString().length === 9 &&
-      !this.supervisores.some(
-        (supervisor) => supervisor.phoneNumber === this.newSupervisor.phoneNumber,
-      );
-  
-    // Verificar que el correo electrónico no esté registrado
-    const validCorreoElectronicoUnico = !this.supervisores.some(
-      (supervisor) => supervisor.email === this.newSupervisor.email,
-    );
+    const validCorreoElectronico = this.isEmailValid();
+    const validDNI = this.isDNIValid();
+    const validNumeroTelefonico = this.isPhoneNumberValid();
     
     return (
       validNombre &&
       validApellido &&
       validCorreoElectronico &&
       validDNI &&
-      validNumeroTelefonico &&
-      validCorreoElectronicoUnico
+      validNumeroTelefonico
+    );
+  }
+  
+  isDNIValid(): boolean {
+    return (
+      this.newSupervisor.dni !== null &&
+      !isNaN(Number(this.newSupervisor.dni)) &&
+      this.newSupervisor.dni.toString().length === 8
+    );
+  }
+  
+  isPhoneNumberValid(): boolean {
+    return (
+      this.newSupervisor.phoneNumber !== null &&
+      !isNaN(Number(this.newSupervisor.phoneNumber)) &&
+      this.newSupervisor.phoneNumber.toString().length === 9
     );
   }
 
