@@ -42,9 +42,15 @@ export class ContactComponent {
       };
 
       this.emailService.sendEmail(emailDto).subscribe(
-        () => {
-          this.emailSent = true;
-          console.log("Correo enviado exitosamente");
+        (response: any) => {
+          if (response === "Email sent") {
+            this.emailSent = true;
+            console.log("Correo enviado exitosamente");
+          } else {
+            console.error("Respuesta inesperada del servidor:", response);
+            this.errorMessage = 'Error inesperado del servidor';
+            this.emailSent = false;
+          }
         },
         error => {
           console.error("Error al enviar el correo:", error);

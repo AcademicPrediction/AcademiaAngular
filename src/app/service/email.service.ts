@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Email } from '../model/email-dto';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -12,7 +12,15 @@ export class EmailService {
 
   constructor(private http: HttpClient) {}
 
-  sendEmail(emailDto: Email): Observable<Email> {
-    return this.http.post<Email>(this.apiUrl, emailDto);
+  sendEmail(emailDto: Email): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'text/plain'
+      }),
+      responseType: 'text' as 'json' // Esto indica que esperas una respuesta de texto plano
+    };
+
+    return this.http.post(this.apiUrl, emailDto, httpOptions);
   }
 }
