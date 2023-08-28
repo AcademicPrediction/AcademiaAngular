@@ -43,6 +43,11 @@
           </div>
         </form>
       </div>
+      <!-- Mensaje y botón de éxito -->
+      <div *ngIf="emailSent" class="alert alert-success">
+        Correo enviado exitosamente.
+      </div>
+      <button *ngIf="emailSent" class="btn btn-primary" (click)="redirectToLogin()">Ir a Inicio de Sesión</button>
     </div>
   </div>
 </div>
