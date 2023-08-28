@@ -9,7 +9,8 @@ import { GetPredictionDto } from '../model/getPredictionDto';
 })
 export class PredictionService {
   constructor(private http: HttpClient) {}
-  private apiUrl = 'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/predictions';
+  private apiUrl =
+    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/predictions';
 
   doPrediction(file: File, supervisorId: number): Observable<any> {
     const formData = new FormData();
