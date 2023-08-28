@@ -1,6 +1,6 @@
 export interface Prediction {
   id: number;
-  fileName: string;
-  date: string;
+  name: string;
+  date: Date;
   isSelected?: boolean;
 }

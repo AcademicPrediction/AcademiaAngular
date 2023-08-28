@@ -27,10 +27,4 @@ export class HomePageSupervisorComponent {
     // Aquí puedes realizar cualquier acción con los datos, por ejemplo:
     console.log('Elemento arrastrado:', data);
   }
-
-  //logOut
-  logOut() {
-    localStorage.clear();
-    window.location.reload();
-  }
 }
