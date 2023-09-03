@@ -13,8 +13,12 @@ import { PredictionService } from 'src/app/service/prediction.service';
 })
 export class LoginComponent {
   email: string = '';
+  emailForget: string = '';
+  showValidationMessage: boolean = false; 
   password: string = '';
   showPassword: boolean = false;
+  showModal: boolean = false;
+  emailSent: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -73,5 +77,31 @@ export class LoginComponent {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  toggleModalVisibility() {
+    this.showModal = !this.showModal;
+  }
+
+  validateAndSendEmail() {
+    if (!this.emailForget) {
+      this.showValidationMessage = true;
+      this.emailSent = false;
+      return;
+    }
+  
+    if (!this.isValidEmail(this.emailForget)) {
+      this.showValidationMessage = true;
+      this.emailSent = false;
+      return;
+    }
+  
+    this.showValidationMessage = true;
+    this.emailSent = true;
+  }
+
+  isValidEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
   }
 }

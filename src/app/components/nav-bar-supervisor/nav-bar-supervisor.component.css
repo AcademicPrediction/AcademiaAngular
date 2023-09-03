@@ -60,4 +60,6 @@ span {
     background: #fff;
 }
 
-
+.email-space {
+    margin-bottom: 10px; /* Ajusta el margen inferior según tus preferencias */
+}
