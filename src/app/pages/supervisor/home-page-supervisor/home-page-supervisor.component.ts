@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-home-page-supervisor',
