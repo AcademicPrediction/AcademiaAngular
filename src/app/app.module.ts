@@ -16,6 +16,7 @@ import { PredictionPageComponent } from './pages/supervisor/prediction-page/pred
 import { PredictionHistoryComponent } from './pages/supervisor/prediction-history/prediction-history.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PredictionDialogComponent } from './components/prediction-dialog/prediction-dialog.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -29,16 +30,17 @@ import { PredictionDialogComponent } from './components/prediction-dialog/predic
     PredictionHistoryComponent,
     ContactComponent,
     PredictionDialogComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule, 
+    HttpClientModule,
     AppRoutingModule,
     NgbModule,
     CommonModule,
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

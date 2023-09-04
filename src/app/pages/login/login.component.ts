@@ -5,6 +5,8 @@ import { Supervisor } from 'src/app/model/supervisor';
 import { Admin } from 'src/app/model/admin';
 import { LoginDto } from 'src/app/model/login-dto';
 import { PredictionService } from 'src/app/service/prediction.service';
+import { Email } from 'src/app/model/email-dto';
+import { EmailService } from 'src/app/service/email.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ import { PredictionService } from 'src/app/service/prediction.service';
 export class LoginComponent {
   email: string = '';
   emailForget: string = '';
-  showValidationMessage: boolean = false; 
+  showValidationMessage: boolean = false;
   password: string = '';
   showPassword: boolean = false;
   showModal: boolean = false;
@@ -24,6 +26,7 @@ export class LoginComponent {
     private loginService: LoginService,
     private router: Router,
     private predictionService: PredictionService,
+    private emailService: EmailService,
   ) {}
 
   ngOnInit(): void {
@@ -89,13 +92,20 @@ export class LoginComponent {
       this.emailSent = false;
       return;
     }
-  
+
     if (!this.isValidEmail(this.emailForget)) {
       this.showValidationMessage = true;
       this.emailSent = false;
       return;
     }
-  
+
+    const emailDto: Email = {
+      email: this.emailForget,
+    };
+    this.emailService.sendEmail(emailDto).subscribe((data) => {
+      console.log(data);
+    });
+
     this.showValidationMessage = true;
     this.emailSent = true;
   }

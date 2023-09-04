@@ -6,6 +6,7 @@ import { HomePageSupervisorComponent } from './pages/supervisor/home-page-superv
 import { PredictionPageComponent } from './pages/supervisor/prediction-page/prediction-page.component';
 import { PredictionHistoryComponent } from './pages/supervisor/prediction-history/prediction-history.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirecciona a /login al cargar la app
   { path: 'login', component: LoginComponent },
@@ -24,11 +25,15 @@ const routes: Routes = [
   {
     path: 'history-prediction',
     component: PredictionHistoryComponent,
-  }, 
+  },
   {
     path: 'contact',
     component: ContactComponent,
-  }
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
 ];
 
 @NgModule({
