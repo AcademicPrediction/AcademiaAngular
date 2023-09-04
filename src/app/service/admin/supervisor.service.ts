@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Supervisor } from 'src/app/model/supervisor';
+import { UpdatePasswordDto } from 'src/app/model/update-password-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +30,10 @@ export class SupervisorService {
   delete(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
+  }
+
+  updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<any> {
+    const url = `${this.apiUrl}/update-password`;
+    return this.http.patch<any>(url, updatePasswordDto);
   }
 }

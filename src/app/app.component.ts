@@ -10,16 +10,20 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   title = 'Academai';
   constructor(private route: Router) {
-    this.route.events.subscribe((event) => {
+    /*this.route.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.validateSession(event.url);
       }
-    });
+    });*/
   }
 
-  validateSession(url: string) {
-    if (localStorage.getItem('role') === null && url !== '/contact') {
+  /*validateSession(url: string) {
+    if (
+      localStorage.getItem('role') === null &&
+      url !== '/contact' &&
+      url !== '/forgot-password'
+    ) {
       this.route.navigate(['/login']);
     }
-  }
+  }*/
 }

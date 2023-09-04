@@ -2,7 +2,9 @@
   <section class="tw-w-[600px] tw-px-10">
     <header>
       <h2 class="tw-text-3xl tw-font-medium">Bienvenido</h2>
-      <h3 class="tw-text-xl tw-font-medium tw-py-2">Ingrese sus credenciales</h3>
+      <h3 class="tw-text-xl tw-font-medium tw-py-2">
+        Ingrese sus credenciales
+      </h3>
     </header>
     <form class="tw-py-10 flex tw-flex-col">
       <div class="tw-flex tw-flex-col tw-py-2">
@@ -37,15 +39,20 @@
           ></i>
         </div>
       </div>
-      <button class="bg-green-500 tw-text-white tw-rounded-md" (click)="onLogin()">Iniciar Sesión</button>
+      <button
+        class="bg-green-500 tw-text-white tw-rounded-md"
+        (click)="onLogin()"
+      >
+        Iniciar Sesión
+      </button>
       <a
-      class="text-sm font-medium text-center forgot-password-color"
-      [style.textDecoration]="showModal ? 'underline' : 'none'"
-      [style.color]="showModal ? 'blue' : 'rgba(24, 42, 202, 0.979)'"
-      (click)="toggleModalVisibility()"
-    >
-      <span>¿Olvidaste tu Contraseña?</span>
-    </a>
+        class="text-sm font-medium text-center forgot-password-color tw-cursor-pointer"
+        [style.textDecoration]="showModal ? 'underline' : 'none'"
+        [style.color]="showModal ? 'blue' : 'rgba(24, 42, 202, 0.979)'"
+        (click)="toggleModalVisibility()"
+      >
+        <span>¿Olvidaste tu Contraseña?</span>
+      </a>
     </form>
     <footer class="flex justify-center pt-12">
       <a class="text-sm font-medium text-center" routerLink="/contact">
@@ -68,7 +75,8 @@
     </div>
     <div class="modal-body">
       <p class="card-text py-2">
-        Ingresa tu correo electrónico y te enviaremos un correo con instrucciones para restablecer tu contraseña.
+        Ingresa tu correo electrónico y te enviaremos un correo con
+        instrucciones para restablecer tu contraseña.
       </p>
       <div class="form-outline">
         <label class="text-lg font-medium">
@@ -84,7 +92,9 @@
         <div class="validation-message">
           <span
             class="invalid-message"
-            *ngIf="showValidationMessage && !isValidEmail(emailForget) && !emailSent"
+            *ngIf="
+              showValidationMessage && !isValidEmail(emailForget) && !emailSent
+            "
           >
             Correo inválido
           </span>
@@ -102,12 +112,11 @@
           >
             Se envió correctamente el correo
           </span>
-        </div>        
+        </div>
       </div>
       <a class="btn btn-primary w-100" (click)="validateAndSendEmail()">
-        <span style="color: white;">Enviar</span>
+        <span style="color: white">Enviar</span>
       </a>
     </div>
   </div>
 </div>
-
