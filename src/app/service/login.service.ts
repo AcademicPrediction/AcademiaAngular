@@ -10,7 +10,8 @@ import { LoginDto } from '../model/login-dto';
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:5000/api/v1/';
+  private apiUrl =
+    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/';
   adminUrl = this.apiUrl + 'administrator/login';
   supervisorUrl = this.apiUrl + 'supervisors/login';
 
