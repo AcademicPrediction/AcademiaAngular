@@ -36,4 +36,16 @@ export class PredictionService {
       observe: 'response',
     });
   }
+
+  donwloadLastPrediction(supervisorId: number): Observable<any> {
+    const apiUrl = `${this.apiUrl}/last-prediction/${supervisorId}`;
+    return this.http.post(
+      apiUrl,
+      {},
+      {
+        responseType: 'blob',
+        observe: 'response',
+      },
+    );
+  }
 }
