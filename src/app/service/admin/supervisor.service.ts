@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Supervisor } from 'src/app/model/supervisor';
 import { UpdatePasswordDto } from 'src/app/model/update-password-dto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SupervisorService {
-  private apiUrl =
-    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/supervisors';
+  private apiUrl = environment.apiUrl + '/supervisors';
 
   constructor(private http: HttpClient) {}
 

@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Prediction } from '../model/prediction';
 import { GetPredictionDto } from '../model/getPredictionDto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PredictionService {
   constructor(private http: HttpClient) {}
-  private apiUrl =
-    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/predictions';
+  private apiUrl = environment.apiUrl + '/predictions';
 
   doPrediction(file: File, supervisorId: number): Observable<any> {
     const formData = new FormData();
