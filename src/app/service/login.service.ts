@@ -5,15 +5,15 @@ import { map, mergeMap } from 'rxjs/operators';
 import { Supervisor } from 'src/app/model/supervisor';
 import { Admin } from 'src/app/model/admin';
 import { LoginDto } from '../model/login-dto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl =
-    'http://funcionabasura-env.eba-upsse4x4.us-east-2.elasticbeanstalk.com/api/v1/';
-  adminUrl = this.apiUrl + 'administrator/login';
-  supervisorUrl = this.apiUrl + 'supervisors/login';
+  private apiUrl = environment.apiUrl;
+  adminUrl = this.apiUrl + '/administrator/login';
+  supervisorUrl = this.apiUrl + '/supervisors/login';
 
   constructor(private http: HttpClient) {}
 
