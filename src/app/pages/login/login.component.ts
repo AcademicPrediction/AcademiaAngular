@@ -107,7 +107,7 @@ export class LoginComponent {
 
     const emailDto: Email = {
       email: this.emailForget,
-      messageType: '1',
+      messageType: '2',
     };
 
     this.emailService.sendEmail(emailDto).subscribe((data) => {

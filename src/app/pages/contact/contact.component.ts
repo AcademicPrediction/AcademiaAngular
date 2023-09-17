@@ -42,7 +42,7 @@ export class ContactComponent {
         email: String(f.value.InputEmail),
         phone: phoneValue,
         message: String(f.value.InputMessage),
-        messageType: '2',
+        messageType: '1',
       };
 
       this.emailService.sendEmail(emailDto).subscribe(
