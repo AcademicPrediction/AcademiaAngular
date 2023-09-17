@@ -47,7 +47,7 @@ export class ContactComponent {
 
       this.emailService.sendEmail(emailDto).subscribe(
         (response: any) => {
-          if (response === 'Email sent') {
+          if (response.message === 'Email sent') {
             this.emailSent = true;
             console.log('Correo enviado exitosamente');
           } else {
