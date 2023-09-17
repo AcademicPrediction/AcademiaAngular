@@ -42,6 +42,7 @@ export class HomePageSupervisorComponent {
       CategoryScale,
       LinearScale,
       Tooltip,
+      Legend,
     );
   }
 
@@ -85,6 +86,9 @@ export class HomePageSupervisorComponent {
     data.forEach((student: any) => {
       Object.keys(student).forEach((course) => {
         if (course === 'Alumno') return;
+
+        course = course.replace(' Predicted', '');
+
         if (!courses[course]) courses[course] = { good: 0, bad: 0 };
 
         if (student[course] > 11) {
@@ -127,6 +131,16 @@ export class HomePageSupervisorComponent {
           y: {
             title: { display: true, text: 'Número de Estudiantes' },
             beginAtZero: true,
+          },
+        },
+        plugins: {
+          legend: {
+            display: true, // para mostrar la leyenda
+            position: 'top', // puedes cambiar la posición ('top', 'left', 'bottom', 'right')
+            labels: {
+              boxWidth: 50,
+              padding: 10,
+            },
           },
         },
       },

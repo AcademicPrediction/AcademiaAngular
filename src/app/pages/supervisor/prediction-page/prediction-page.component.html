@@ -57,7 +57,7 @@
           class="tw-opacity-0 tw-w-full tw-h-full tw-top-0 tw-start-0 tw-absolute tw-z-30"
         />
         <div
-          class="tw-flex tw-flex-col tw-justify-center tw-h-full"
+          class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-full"
           *ngIf="file && !isLoading"
         >
           <img
@@ -87,5 +87,21 @@
       (closeDialog)="closeDialog()"
     >
     </app-prediction-dialog>
+
+    <div
+      *ngIf="predictionFailed"
+      class="tw-fixed tw-inset-20 tw-flex tw-items-center tw-justify-center tw-z-50 tw-w-full"
+    >
+      <div class="tw-bg-white tw-rounded tw-shadow-lg tw-p-8 tw-w-1/2">
+        <h2 class="tw-text-2xl tw-mb-4">Predicción fallida</h2>
+        <p>Hubo un error al ejecutarse la prediccion.</p>
+        <button
+          class="tw-mt-4 tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded"
+          (click)="closeDialogPredictionFailed()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
   </section>
 </main>
