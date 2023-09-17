@@ -17,6 +17,7 @@ export class PredictionPageComponent {
   file: any;
   isLoading: boolean = false;
   showDialog = false;
+  predictionFailed = false;
   supervisor: Supervisor | null = null;
 
   ngOnInit(): void {
@@ -72,7 +73,7 @@ export class PredictionPageComponent {
           this.showDialog = true;
         },
         (error) => {
-          console.error('Error al descargar el archivo:', error);
+          this.predictionFailed = true;
           this.isLoading = false;
         },
       );
@@ -85,5 +86,11 @@ export class PredictionPageComponent {
 
   closeDialog() {
     this.showDialog = false;
+  }
+
+  closeDialogPredictionFailed() {
+    this.predictionFailed = false;
+    //reload page
+    window.location.reload();
   }
 }
