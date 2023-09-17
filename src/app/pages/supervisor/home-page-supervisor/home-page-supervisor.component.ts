@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgIf } from '@angular/common';
 import * as XLSX from 'xlsx';
@@ -31,6 +30,7 @@ import { Supervisor } from 'src/app/model/supervisor';
 export class HomePageSupervisorComponent {
   supervisor: Supervisor | null = null;
   existPrediction = false;
+  isLoading = true;
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
   chart?: Chart<keyof ChartTypeRegistry, any[], any>;
@@ -69,9 +69,11 @@ export class HomePageSupervisorComponent {
         reader.readAsBinaryString(blob);
 
         this.existPrediction = true;
+        this.isLoading = false;
       },
       (error) => {
         this.existPrediction = false;
+        this.isLoading = false;
         console.error('Error al obtener la última predicción:', error);
       },
     );

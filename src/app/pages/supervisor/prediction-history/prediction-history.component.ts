@@ -13,7 +13,7 @@ export class PredictionHistoryComponent {
   predictiones: Prediction[] = [];
   totalPredictiones: number = 0;
   currentPage: number = 1;
-  itemsPerPage: number = 7;
+  itemsPerPage: number = 12;
   totalPages: number = 1;
   selectedPrediction: Prediction | null = null;
   isIconsEnabled: boolean = false;
@@ -43,13 +43,17 @@ export class PredictionHistoryComponent {
     ) as Supervisor;
     this.predictionService.getAllPredictions(this.supervisor.id).subscribe(
       (predictiones: Prediction[]) => {
-        this.predictiones = predictiones;
+        this.predictiones = predictiones.sort((a, b) => {
+          //return a.id - b.id; // Orden ascendente
+          return b.id - a.id; // Para orden descendente
+        });
+
         this.totalPredictiones = this.predictiones.length;
         this.calculateTotalPages();
         this.applyFilter();
       },
       (error) => {
-        console.error('Error al obtener predictiones:', error);
+        console.error('Error al obtener predicciones:', error);
       },
     );
   }

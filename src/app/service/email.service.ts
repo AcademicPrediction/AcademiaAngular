@@ -3,6 +3,7 @@ import { Email } from '../model/email-dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { EmailResponseDto } from '../model/email-response-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +17,8 @@ export class EmailService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Accept: 'text/plain',
+        Accept: 'application/json',
       }),
-      responseType: 'text' as 'json', // Esto indica que esperas una respuesta de texto plano
     };
 
     return this.http.post(this.apiUrl, emailDto, httpOptions);

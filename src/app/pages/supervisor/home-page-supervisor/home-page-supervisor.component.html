@@ -5,21 +5,30 @@
   <section
     class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-screen tw-pb-14"
   >
-    <h1 class="tw-text-center tw-font-semibold tw-text-2xl tw-mt-5">
+    <div *ngIf="isLoading" class="loader tw-place-self-center"></div>
+
+    <h1
+      *ngIf="existPrediction && !isLoading"
+      class="tw-text-center tw-font-semibold tw-text-2xl tw-mt-5"
+    >
       <span>Última Predicción</span>
     </h1>
-    <div *ngIf="existPrediction" class="tw-h-[1000px] tw-w-full tw-p-10">
-      <canvas *ngIf="existPrediction" class="" #chartCanvas></canvas>
+    <div
+      *ngIf="existPrediction && !isLoading"
+      class="tw-h-[1000px] tw-w-full tw-p-10"
+    >
+      <canvas class="" #chartCanvas></canvas>
     </div>
 
-    <div *ngIf="!existPrediction">
+    <div *ngIf="!existPrediction && !isLoading" class="tw-text-center">
       <h2 class="tw-text-center tw-font-semibold">
         <span>Aun no ha realizado ninguna</span>
         <br />
         <span>predicción</span>
       </h2>
       <a
-        class="do-prediction-color tw-text-center tw-text-xs tw-col tw-font-semibold hover:tw-cursor-pointer tw-pt-2"
+        class="do-prediction-color tw-text-xx|x tw-col tw-font-semibold hover:tw-cursor-pointer"
+        href="/prediction"
       >
         <span>Realiza tu predicción</span>
         <br />

@@ -21,6 +21,8 @@ export class LoginComponent {
   showPassword: boolean = false;
   showModal: boolean = false;
   emailSent: boolean = false;
+  emailExists: boolean = true;
+  invalidLogin: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -65,7 +67,7 @@ export class LoginComponent {
           },
           (error: any) => {
             if (error.status === 404) {
-              alert('Usuario no encontrado.');
+              this.invalidLogin = true;
             } else {
               alert('Error al iniciar sesión.');
             }
@@ -87,6 +89,10 @@ export class LoginComponent {
   }
 
   validateAndSendEmail() {
+    this.showValidationMessage = false;
+    this.emailSent = false;
+    this.emailExists = true;
+
     if (!this.emailForget) {
       this.showValidationMessage = true;
       this.emailSent = false;
@@ -101,13 +107,17 @@ export class LoginComponent {
 
     const emailDto: Email = {
       email: this.emailForget,
+      messageType: '1',
     };
-    this.emailService.sendEmail(emailDto).subscribe((data) => {
-      console.log(data);
-    });
 
-    this.showValidationMessage = true;
-    this.emailSent = true;
+    this.emailService.sendEmail(emailDto).subscribe((data) => {
+      if (data.message === 'Email sent') {
+        this.showValidationMessage = true;
+        this.emailSent = true;
+      } else {
+        this.emailExists = false;
+      }
+    });
   }
 
   isValidEmail(email: string): boolean {

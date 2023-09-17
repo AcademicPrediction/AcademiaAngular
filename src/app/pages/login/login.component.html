@@ -39,8 +39,11 @@
           ></i>
         </div>
       </div>
+      <span class="invalid-message tw-font-semibold" *ngIf="invalidLogin">
+        Contraseña o correo incorrecto
+      </span>
       <button
-        class="bg-green-500 tw-text-white tw-rounded-md"
+        class="bg-green-500 tw-text-white tw-rounded-md tw-mt-1"
         (click)="onLogin()"
       >
         Iniciar Sesión
@@ -98,14 +101,9 @@
           >
             Correo inválido
           </span>
-          <!--
-          <span
-            class="valid-message"
-            *ngIf="showValidationMessage && isValidEmail(emailForget) && !emailSent"
-          >
-            Correo válido
+          <span class="invalid-message" *ngIf="!emailExists">
+            Correo no existe
           </span>
-          -->
           <span
             class="valid-message"
             *ngIf="showValidationMessage && emailSent"

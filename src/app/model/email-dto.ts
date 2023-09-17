@@ -3,4 +3,5 @@ export interface Email {
   email: string; // Obligatorio
   phone?: string; // Opcional
   message?: string; // Opcional
+  messageType?: string; // Opcional
 }
