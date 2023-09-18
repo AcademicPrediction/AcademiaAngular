@@ -87,19 +87,22 @@ export class HomePageSupervisorComponent {
       Object.keys(student).forEach((course) => {
         if (course === 'Alumno') return;
 
-        course = course.replace(' Predicted', '');
+        // Elimina la palabra 'predicted' de cada curso.
+        const cleanCourse = course.replace(' Predicted', '');
 
-        if (!courses[course]) courses[course] = { good: 0, bad: 0 };
+        if (!courses[cleanCourse]) courses[cleanCourse] = { good: 0, bad: 0 };
 
         if (student[course] > 11) {
-          courses[course].good += 1;
+          courses[cleanCourse].good += 1;
         } else {
-          courses[course].bad += 1;
+          courses[cleanCourse].bad += 1;
         }
       });
     });
 
-    const labels = Object.keys(courses);
+    const labels = Object.keys(courses).map((label) =>
+      label.replace(' predicted', ''),
+    );
     const goodScores = labels.map((label) => courses[label].good);
     const badScores = labels.map((label) => courses[label].bad);
 
