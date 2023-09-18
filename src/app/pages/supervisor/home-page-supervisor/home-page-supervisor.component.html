@@ -7,18 +7,25 @@
   >
     <div *ngIf="isLoading" class="loader tw-place-self-center"></div>
 
-    <h1
-      *ngIf="existPrediction && !isLoading"
-      class="tw-text-center tw-font-semibold tw-text-2xl tw-mt-5"
-    >
+    <h1 *ngIf="existPrediction && !isLoading" class="tw-text-center tw-font-semibold tw-text-2xl tw-mb-4">
       <span>Última Predicción</span>
     </h1>
-    <div
-      *ngIf="existPrediction && !isLoading"
-      class="tw-h-[1000px] tw-w-full tw-p-10"
-    >
-      <canvas class="tw-w-full tw-h-full tw-p-24" #chartCanvas></canvas>
+    
+  
+    <div *ngIf="existPrediction && !isLoading" class="tw-w-full tw-flex tw-justify-center">
+      <canvas class="tw-h-full" #chartCanvas style="max-width: 70vw !important; height: 67vh !important;"></canvas>
     </div>
+
+    <div *ngIf="existPrediction && !isLoading" class="tw-text-center tw-mt-4">
+      <p>
+        <strong>Notas:</strong>
+        <br>
+        Se considera <span class="tw-text-green-500">buen rendimiento</span> cuando la puntuación es mayor a 11 y hasta 20.
+        <br>
+        Se considera <span class="tw-text-red-500">mal rendimiento</span> cuando la puntuación es 11 o menor.
+      </p>
+    </div>
+
 
     <div *ngIf="!existPrediction && !isLoading" class="tw-text-center">
       <h2 class="tw-text-center tw-font-semibold">

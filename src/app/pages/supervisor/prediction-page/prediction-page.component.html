@@ -103,5 +103,22 @@
         </button>
       </div>
     </div>
+
+  <div
+    *ngIf="invalidFile"
+    class="tw-fixed tw-inset-20 tw-flex tw-items-center tw-justify-center tw-z-50 tw-w-full"
+  >
+    <div class="tw-bg-white tw-rounded tw-shadow-lg tw-p-8 tw-w-1/2">
+      <h2 class="tw-text-2xl tw-mb-4">Archivo no válido</h2>
+      <p>Solo se permiten archivos Excel.</p>
+      <button
+        class="tw-mt-4 tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded"
+        (click)="closeInvalidFileDialog()"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>  
+  
   </section>
 </main>

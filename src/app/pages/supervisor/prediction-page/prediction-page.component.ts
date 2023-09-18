@@ -20,6 +20,8 @@ export class PredictionPageComponent {
   predictionFailed = false;
   supervisor: Supervisor | null = null;
 
+  invalidFile = false;
+
   ngOnInit(): void {
     this.file = null;
   }
@@ -35,8 +37,10 @@ export class PredictionPageComponent {
       )
     ) {
       this.file = selectedFile;
+      this.invalidFile = false; // Asegúrate de restablecerlo a false aquí
     } else {
       console.log('Archivo no válido. Solo se permiten archivos Excel.');
+      this.invalidFile = true; // Activa el diálogo aquí
     }
   }
 
@@ -91,6 +95,11 @@ export class PredictionPageComponent {
   closeDialogPredictionFailed() {
     this.predictionFailed = false;
     //reload page
+    window.location.reload();
+  }
+
+  closeInvalidFileDialog() {
+    this.invalidFile = false;
     window.location.reload();
   }
 }
