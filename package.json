@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^15.1.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.11.1",
     "chart.js": "^3.5.0",
     "firebase": "^10.2.0",
     "rxjs": "~7.8.0",

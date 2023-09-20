@@ -18,6 +18,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { PredictionDialogComponent } from './components/prediction-dialog/prediction-dialog.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { PredictionReviewComponent } from './pages/supervisor/prediction-review/prediction-review.component';
+import { HelpComponent } from './pages/help/help.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PredictionReviewComponent } from './pages/supervisor/prediction-review/
     PredictionDialogComponent,
     ForgotPasswordComponent,
     PredictionReviewComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,

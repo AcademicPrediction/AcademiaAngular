@@ -1,0 +1,82 @@
+/* Estilos existentes para el layout principal */
+main.tw-flex {
+    display: flex;
+    height: 100vh; /* Altura completa de la ventana del navegador */
+  }
+  
+  /* Nuevo estilo para centrar el contenido */
+  .main-content {
+    flex-grow: 1; /* Permitir que el contenido crezca y ocupe el espacio disponible */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrar contenido verticalmente */
+  }
+  
+  /* Estilos para el título, el video y otros elementos */
+  .main-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center; /* Centra el texto del título */
+  }
+  
+  .video-wrapper {
+    display: flex;
+    justify-content: center; /* Centra el video horizontalmente */
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .video-wrapper iframe {
+    width: 80%; /* Aumenta el ancho */
+    height: 450px; /* Aumenta la altura */
+  }
+  
+  .main-content p {
+    margin-bottom: 10px;
+  }
+  
+  .icon-wrapper i.fas.fa-file-excel {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .main-content button {
+    background-color: #3E86F5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .title {
+    font-weight: bold; /* Negrita */
+    color: #3E86F5; /* Color del texto */
+  }
+  
+  /* Estilo para el texto de "Descargar Plantilla" */
+  .download-text {
+    font-weight: bold; /* Negrita */
+  }
+  
+  /* Estilo para el icono de Excel */
+  .excel-icon {
+    font-size: 48px;  /* Ajusta el tamaño del icono */
+    color: green;  /* Cambia el color a verde */
+  }
+  
+  .download-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #3E86F5;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .download-button:hover {
+    background-color: #3E86F5;
+  }  

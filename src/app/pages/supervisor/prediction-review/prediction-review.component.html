@@ -1,0 +1,48 @@
+<main class="tw-flex">
+  <aside>
+    <app-nav-bar-supervisor></app-nav-bar-supervisor>
+  </aside>
+  <section
+    class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-screen tw-pb-14"
+  >
+    <div *ngIf="isLoading" class="loader tw-place-self-center"></div>
+
+    <div
+      *ngIf="!isLoading"
+      class="tw-flex tw-w-full tw-items-center tw-justify-between tw-mb-10"
+    >
+      <i
+        class="fas fa-arrow-left tw-ml-16 tw-text-4xl tw-cursor-pointer"
+        (click)="navigateToPredictionHistory()"
+      ></i>
+
+      <div class="tw-flex-1 tw-text-center">
+        <h1 class="tw-font-semibold tw-text-2xl tw-mb-4">
+          <span>Resumen de Predicción N° </span>
+          <span>{{ predictionId }}</span>
+        </h1>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading" class="tw-w-full tw-flex tw-justify-center">
+      <canvas
+        class="tw-h-full"
+        #chartCanvas
+        style="max-width: 70vw !important; height: 67vh !important"
+      ></canvas>
+    </div>
+
+    <div *ngIf="!isLoading" class="tw-text-center tw-mt-4">
+      <p>
+        <strong>Notas:</strong>
+        <br />
+        Se considera
+        <span class="tw-text-green-500">buen rendimiento</span> cuando la
+        puntuación es mayor a 11 y hasta 20.
+        <br />
+        Se considera <span class="tw-text-red-500">mal rendimiento</span> cuando
+        la puntuación es 11 o menor.
+      </p>
+    </div>
+  </section>
+</main>

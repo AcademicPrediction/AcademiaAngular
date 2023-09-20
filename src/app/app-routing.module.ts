@@ -8,6 +8,7 @@ import { PredictionHistoryComponent } from './pages/supervisor/prediction-histor
 import { ContactComponent } from './pages/contact/contact.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { PredictionReviewComponent } from './pages/supervisor/prediction-review/prediction-review.component';
+import { HelpComponent } from './pages/help/help.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirecciona a /login al cargar la app
   { path: 'login', component: LoginComponent },
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'prediction-review/:id/:name',
     component: PredictionReviewComponent,
+  },
+  {
+    path: 'help',
+    component: HelpComponent,
   },
 ];
 

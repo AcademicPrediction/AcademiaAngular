@@ -38,6 +38,7 @@ span {
 .wrapper {
   display: flex;
   align-items: stretch;
+  height: 100vh; /* Esto asegura que el contenedor tenga una altura de 100% de la ventana del navegador */
 }
 
 #sidebar {
@@ -45,6 +46,8 @@ span {
   color: black;
   transition: all 0.3s;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100vh;  /* Establece la altura máxima del sidebar al 100% de la altura de la ventana */
+  overflow-y: auto;  /* Permite el desplazamiento vertical si el contenido es más largo que la altura de la ventana */
 }
 
 /* Estilos para la imagen dentro del sidebar-header */
