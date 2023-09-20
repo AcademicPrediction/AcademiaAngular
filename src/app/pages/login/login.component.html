@@ -93,22 +93,17 @@
           placeholder="Correo electrónico"
         />
         <div class="validation-message">
-          <span
-            class="invalid-message"
-            *ngIf="
-              showValidationMessage && !isValidEmail(emailForget) && !emailSent
-            "
-          >
+          <span class="invalid-message" *ngIf="showValidationMessage && !isValidEmail(emailForget) && !emailSent">
             Correo inválido
           </span>
-          <span class="invalid-message" *ngIf="!emailExists">
+          <span class="invalid-message" *ngIf="!emailExists && !showSuccessMessage && !showErrorMessage">
             Correo no existe
           </span>
-          <span
-            class="valid-message"
-            *ngIf="showValidationMessage && emailSent"
-          >
+          <span class="valid-message" *ngIf="showSuccessMessage">
             Se envió correctamente el correo
+          </span>
+          <span class="invalid-message" *ngIf="showErrorMessage">
+            Ocurrió un error, por favor inténtelo más tarde
           </span>
         </div>
       </div>
@@ -117,4 +112,8 @@
       </a>
     </div>
   </div>
+</div>
+
+<div *ngIf="showLoader" class="loader-container">
+  <div class="loader"></div>
 </div>

@@ -23,6 +23,9 @@ export class LoginComponent {
   emailSent: boolean = false;
   emailExists: boolean = true;
   invalidLogin: boolean = false;
+  showLoader: boolean = false;
+  showSuccessMessage: boolean = false;
+  showErrorMessage: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -80,6 +83,18 @@ export class LoginComponent {
     );
   }
 
+  toggleLoader(show: boolean) {
+    this.showLoader = show;
+  }
+  
+  toggleSuccessMessage(show: boolean) {
+    this.showSuccessMessage = show;
+  }
+  
+  toggleErrorMessage(show: boolean) {
+    this.showErrorMessage = show;
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
@@ -90,35 +105,43 @@ export class LoginComponent {
 
   validateAndSendEmail() {
     this.showValidationMessage = false;
-    this.emailSent = false;
+    this.showSuccessMessage = false;
+    this.showErrorMessage = false;
     this.emailExists = true;
-
-    if (!this.emailForget) {
+  
+    if (!this.emailForget || !this.isValidEmail(this.emailForget)) {
       this.showValidationMessage = true;
-      this.emailSent = false;
       return;
     }
-
-    if (!this.isValidEmail(this.emailForget)) {
-      this.showValidationMessage = true;
-      this.emailSent = false;
-      return;
-    }
-
+  
+    this.toggleLoader(true); // Mostrar el loader
+  
     const emailDto: Email = {
       email: this.emailForget,
       messageType: '2',
     };
-
-    this.emailService.sendEmail(emailDto).subscribe((data) => {
-      if (data.message === 'Email sent') {
-        this.showValidationMessage = true;
-        this.emailSent = true;
-      } else {
-        this.emailExists = false;
+  
+    this.emailService.sendEmail(emailDto).subscribe(
+      (data) => {
+        this.toggleLoader(false); // Ocultar el loader
+        if (data.message === 'Email sent') {
+          this.showSuccessMessage = true; // Mostrar mensaje de éxito
+        } else {
+          // Solo mostrar el mensaje de "Correo no existe" si no se envió correctamente el correo
+          this.emailExists = false;
+        }
+      },
+      (error) => {
+        this.toggleLoader(false); // Ocultar el loader
+        this.showErrorMessage = true; // Mostrar mensaje de error
+        this.emailExists = true; // Reiniciar el estado de correo existente
       }
-    });
+    );
   }
+  
+  
+  
+  
 
   isValidEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
