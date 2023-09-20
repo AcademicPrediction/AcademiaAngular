@@ -65,6 +65,7 @@
                 required
                 #InputCno="ngModel"
                 (keydown)="restrictInput($event)"
+                (input)="checkPhoneNumber($event)"
               />
             </div>
             <div *ngIf="phoneInvalid" class="text-danger">
