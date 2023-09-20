@@ -1,23 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NgIf } from '@angular/common';
 import * as XLSX from 'xlsx';
 import {
   Chart,
   BarElement,
   BarController,
   CategoryScale,
-  Decimation,
-  Filler,
   Legend,
-  Title,
   Tooltip,
   LinearScale,
-  PieController,
-  ArcElement,
   ChartTypeRegistry,
-  LineController,
-  PointElement,
-  LineElement,
 } from 'chart.js';
 import { PredictionService } from 'src/app/service/prediction.service';
 import { Supervisor } from 'src/app/model/supervisor';

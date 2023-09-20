@@ -47,7 +47,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let prediction of getPaginatedPredictiones()">
+        <tr
+          *ngFor="let prediction of getPaginatedPredictiones()"
+          (click)="
+            navigateToPredictionReview(
+              prediction.id.toString(),
+              prediction.name
+            )
+          "
+        >
           <td>{{ prediction.id }}</td>
           <td>{{ prediction.name }}</td>
           <td>{{ convertDate(prediction.date) }}</td>
@@ -57,7 +65,8 @@
                 downloadPredictionFile(
                   prediction.id.toString(),
                   prediction.name
-                )
+                );
+                $event.stopPropagation()
               "
             >
               <i class="fa fa-download"></i>

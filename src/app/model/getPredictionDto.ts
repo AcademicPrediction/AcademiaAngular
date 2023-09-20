@@ -1,4 +1,4 @@
 export interface GetPredictionDto {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
 }

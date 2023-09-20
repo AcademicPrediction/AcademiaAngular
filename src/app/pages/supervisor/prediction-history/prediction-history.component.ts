@@ -3,6 +3,7 @@ import { Prediction } from 'src/app/model/prediction';
 import { Supervisor } from 'src/app/model/supervisor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PredictionService } from 'src/app/service/prediction.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prediction-history',
@@ -30,6 +31,7 @@ export class PredictionHistoryComponent {
   constructor(
     private modalService: NgbModal,
     private predictionService: PredictionService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -177,5 +179,14 @@ export class PredictionHistoryComponent {
     const day = String(originalDate.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+  }
+
+  navigateToPredictionReview(
+    predictionId: string,
+    predictionName: string,
+  ): void {
+    this.router.navigate(['/prediction-review', predictionId, predictionName]);
+    localStorage.setItem('predictionId', predictionId);
+    localStorage.setItem('predictionName', predictionName);
   }
 }
