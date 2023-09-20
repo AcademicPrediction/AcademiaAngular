@@ -66,35 +66,33 @@
                   required
                   #InputCno="ngModel"
                   (keydown)="restrictInput($event)"
-                  (input)="checkPhoneNumber($event)"
                 />
               </div>
               <div *ngIf="phoneInvalid" class="text-danger">
                 Por favor, ingrese exactamente 9 dígitos
               </div>
             </div>
-            <div
+              <div
               class="form-group"
               [class.has-error]="f.submitted && !InputMessage.valid"
             >
               <div class="input-group">
-                <span class="input-group-addon"
-                  ><i class="fas fa-comment"></i
-                ></span>
+                <span class="input-group-addon"><i class="fas fa-comment"></i></span>
                 <textarea
                   name="InputMessage"
+                  #InputMessage="ngModel"
+                  [(ngModel)]="messageContent"
                   placeholder="Mensaje"
                   rows="6"
                   class="form-control"
-                  ngModel
-                  #InputMessage="ngModel"
                   required
+                  maxlength="250" 
+                  (input)="updateCharacterCount()" 
                 ></textarea>
               </div>
-              <div
-                *ngIf="f.submitted && !InputMessage.valid"
-                class="text-danger"
-              >
+              <!-- Actualiza el contador para mostrar caracteres en lugar de palabras -->
+              <p>Caracteres: {{ characterCount }} / 250</p>
+              <div *ngIf="f.submitted && !InputMessage.valid" class="text-danger">
                 Mensaje es requerido
               </div>
             </div>
@@ -109,7 +107,7 @@
               >
                 Cancelar <i class="fas fa-times"></i>
               </button>
-              <button type="reset" class="btn custom-btn-reset">
+              <button type="reset" class="btn custom-btn-reset" (click)="resetForm()">
                 Reiniciar <i class="fas fa-refresh"></i>
               </button>
             </div>
