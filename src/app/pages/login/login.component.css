@@ -143,3 +143,10 @@ label i.fas {
     transform: rotate(360deg);
   }
 }
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 10px;
+}

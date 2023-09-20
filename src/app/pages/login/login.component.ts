@@ -26,6 +26,8 @@ export class LoginComponent {
   showLoader: boolean = false;
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
+  showRequiredFieldsError: boolean = false;
+  showLoginError: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -46,7 +48,9 @@ export class LoginComponent {
 
   onLogin() {
     if (!this.email || !this.password) {
-      alert('Los campos de correo y contraseña son obligatorios.');
+      this.showRequiredFieldsError = true;
+      this.showLoginError = false;
+      this.invalidLogin = false; 
       return;
     }
 
@@ -71,8 +75,12 @@ export class LoginComponent {
           (error: any) => {
             if (error.status === 404) {
               this.invalidLogin = true;
+              this.showRequiredFieldsError = false;
+              this.showLoginError = false;
             } else {
-              alert('Error al iniciar sesión.');
+              this.showLoginError = true;
+              this.showRequiredFieldsError = false;
+              this.invalidLogin = false;         
             }
           },
         );

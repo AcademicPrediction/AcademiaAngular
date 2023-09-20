@@ -42,10 +42,10 @@
       <span class="invalid-message tw-font-semibold" *ngIf="invalidLogin">
         Contraseña o correo incorrecto
       </span>
-      <button
-        class="bg-green-500 tw-text-white tw-rounded-md tw-mt-1"
-        (click)="onLogin()"
-      >
+      <div class="invalid-message tw-font-semibold" *ngIf="showRequiredFieldsError">Los campos de correo y contraseña son obligatorios.</div>
+      <div class="invalid-message tw-font-semibold" *ngIf="showLoginError">Error al iniciar sesión.</div>
+
+      <button class="bg-green-500 tw-text-white tw-rounded-md tw-mt-1" (click)="onLogin()">
         Iniciar Sesión
       </button>
       <a
