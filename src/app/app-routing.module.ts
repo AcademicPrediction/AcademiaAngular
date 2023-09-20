@@ -7,6 +7,8 @@ import { PredictionPageComponent } from './pages/supervisor/prediction-page/pred
 import { PredictionHistoryComponent } from './pages/supervisor/prediction-history/prediction-history.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { HelpComponent } from './pages/help/help.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirecciona a /login al cargar la app
   { path: 'login', component: LoginComponent },
@@ -33,6 +35,10 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
+  },
+  {
+    path: 'help',
+    component: HelpComponent,
   },
 ];
 
