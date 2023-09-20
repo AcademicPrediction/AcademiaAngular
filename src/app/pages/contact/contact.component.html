@@ -66,6 +66,7 @@
                   required
                   #InputCno="ngModel"
                   (keydown)="restrictInput($event)"
+                  (input)="checkPhoneNumber($event)"
                 />
               </div>
               <div *ngIf="phoneInvalid" class="text-danger">
@@ -115,15 +116,24 @@
           </div>
         </form>
       </div>
+
+      <!-- ... código HTML anterior -->
+      <div *ngIf="isLoading" class="loader-container">
+        <div class="loader"></div>
+      </div>
+
       <!-- Mensaje y botón de éxito -->
       <div *ngIf="emailSent" class="alert alert-success">
         Correo enviado exitosamente.
       </div>
-      <button
-        *ngIf="emailSent"
-        class="btn btn-primary"
-        (click)="redirectToLogin()"
-      >
+
+      <!-- Mensaje y botón de error -->
+      <div *ngIf="isError" class="alert alert-danger">
+        No se pudo enviar el correo, intenta más tarde.
+      </div>
+
+      <!-- Botón de redirección al inicio de sesión -->
+      <button *ngIf="emailSent || isError" class="btn btn-primary" (click)="redirectToLogin()">
         Ir a Inicio de Sesión
       </button>
     </div>

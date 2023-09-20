@@ -12,11 +12,18 @@ export class ContactComponent {
   phoneInvalid = false;
   emailSent = false;
   errorMessage = '';
+  isLoading = false;
+  isError = false;
 
   constructor(
     private emailService: EmailService,
     private router: Router,
   ) {}
+
+  checkPhoneNumber(event: any) {
+    const phoneValue = event.target.value;
+    this.phoneInvalid = phoneValue.length !== 9;
+  }
 
   handleSubmit(f: NgForm) {
     const phoneValue = String(f.value.InputCno);
@@ -45,8 +52,11 @@ export class ContactComponent {
         messageType: '1',
       };
 
+      this.isLoading = true;
       this.emailService.sendEmail(emailDto).subscribe(
         (response: any) => {
+          this.isLoading = false;
+          this.isError = false;
           if (response.message === 'Email sent') {
             this.emailSent = true;
             console.log('Correo enviado exitosamente');
@@ -57,9 +67,11 @@ export class ContactComponent {
           }
         },
         (error) => {
+          this.isLoading = false;
           console.error('Error al enviar el correo:', error);
-          this.errorMessage = 'Error al enviar el correo';
+          this.errorMessage = 'Error al enviar el correo, Intentelo mas tarde';
           this.emailSent = false;
+          this.isError = true;
         },
       );
     } else {
