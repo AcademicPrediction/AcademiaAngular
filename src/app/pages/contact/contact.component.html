@@ -24,8 +24,97 @@
                 required
               />
             </div>
-            <div *ngIf="f.submitted && !InputName.valid" class="text-danger">
-              Nombre es requerido
+
+            <div
+              class="form-group"
+              [class.has-error]="f.submitted && !InputEmail.valid"
+            >
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fas fa-envelope"></i
+                ></span>
+                <input
+                  type="email"
+                  name="InputEmail"
+                  placeholder="Correo Electrónico"
+                  class="form-control"
+                  ngModel
+                  #InputEmail="ngModel"
+                  required
+                  email
+                />
+              </div>
+              <div *ngIf="f.submitted && !InputEmail.valid" class="text-danger">
+                Correo electrónico no válido
+              </div>
+            </div>
+            <div class="form-group" [class.has-error]="phoneInvalid">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fas fa-phone-alt"></i
+                ></span>
+                <input
+                  type="number"
+                  name="InputCno"
+                  placeholder="Teléfono"
+                  class="form-control"
+                  ngModel
+                  required
+                  #InputCno="ngModel"
+                  (keydown)="restrictInput($event)"
+                />
+              </div>
+              <div *ngIf="phoneInvalid" class="text-danger">
+                Por favor, ingrese exactamente 9 dígitos
+              </div>
+            </div>
+            <div
+              class="form-group"
+              [class.has-error]="f.submitted && !InputMessage.valid"
+            >
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fas fa-comment"></i
+                ></span>
+                <textarea
+                  name="InputMessage"
+                  #InputMessage="ngModel"
+                  [(ngModel)]="messageContent"
+                  placeholder="Mensaje"
+                  rows="6"
+                  class="form-control"
+                  required
+                  maxlength="250"
+                  (input)="updateCharacterCount()"
+                ></textarea>
+              </div>
+              <!-- Actualiza el contador para mostrar caracteres en lugar de palabras -->
+              <p>Caracteres: {{ characterCount }} / 250</p>
+              <div
+                *ngIf="f.submitted && !InputMessage.valid"
+                class="text-danger"
+              >
+                Mensaje es requerido
+              </div>
+            </div>
+            <div class="btn-container">
+              <button type="submit" class="btn custom-btn-send">
+                Enviar <i class="fas fa-send"></i>
+              </button>
+              <button
+                type="button"
+                class="btn custom-btn-cancel"
+                routerLink="/login"
+              >
+                Cancelar <i class="fas fa-times"></i>
+              </button>
+              <button
+                type="reset"
+                class="btn custom-btn-reset"
+                (click)="resetForm()"
+              >
+                Reiniciar <i class="fas fa-refresh"></i>
+              </button>
             </div>
           </div>
           <div

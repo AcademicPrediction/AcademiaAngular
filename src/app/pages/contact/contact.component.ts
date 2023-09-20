@@ -14,6 +14,9 @@ export class ContactComponent {
   errorMessage = '';
   isLoading = false;
   isError = false;
+  wordCount: number = 0;
+  messageContent: string = ''; 
+  characterCount: number = 0;
 
   constructor(
     private emailService: EmailService,
@@ -23,6 +26,20 @@ export class ContactComponent {
   checkPhoneNumber(event: any) {
     const phoneValue = event.target.value;
     this.phoneInvalid = phoneValue.length !== 9;
+  }
+
+  updateCharacterCount() {
+    this.characterCount = this.messageContent.length;
+  }
+
+  updateWordCount() {
+    const words = this.messageContent.split(/\s/).filter(Boolean);
+    this.wordCount = words.length;
+
+    if (this.wordCount > 150) {
+      this.messageContent = words.slice(0, 150).join(' ');
+      this.wordCount = 150;  // Actualiza el recuento de palabras a 150
+    }
   }
 
   handleSubmit(f: NgForm) {
@@ -87,5 +104,11 @@ export class ContactComponent {
 
   redirectToLogin() {
     this.router.navigate(['/login']); // Ajusta la ruta según tu configuración de rutas
+  }
+
+  resetForm() {
+    this.messageContent = ''; // Limpia el contenido del textarea
+    this.phoneInvalid = false;
+    this.updateCharacterCount(); // Actualiza el contador de caracteres
   }
 }
